@@ -9,6 +9,8 @@ class Stack:
         self.items.append(item)
 
     def pop(self):
+        if len(self.items) == 0:
+            return
         return self.items.pop()
 
     def get_items(self):

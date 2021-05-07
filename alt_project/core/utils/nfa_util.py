@@ -26,6 +26,7 @@ class NfaUtility:
                 stack.push(c)
             elif c == ")":
                 if len(expression) != 1:
+
                     while not stack.is_empty() and stack.peek() != "(":
                         result.append(stack.pop())
 

@@ -12,7 +12,7 @@ class KeywordNFA:
 
     def keywordToNfa(self, lexicalRulesStore):
         for keyword in lexicalRulesStore.getKeywords():
-            keywordCharacters = keyword.split('')
+            keywordCharacters = list(keyword)
             characters = NfaUtility.addConcatSymbolToWords(keywordCharacters)
             postFixExpression = NfaUtility.infixToPostFix(characters)
             nfa = self.createNfa(postFixExpression)

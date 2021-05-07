@@ -36,14 +36,14 @@ class RegularExpressionNFA:
             k = i + 1
             while k < len(regex):
                 # K + 1 - > Substring is exclusive
-                temp = regex[i, k + 1]
+                temp = regex[i: k + 1]
                 if temp in self.definitionNfa or temp in symbols or temp in self.backlashSymbols:
                     # Don't break from the loop (Digit / Digit(s))
                     j = k + 1
 
                 k += 1
 
-            result.append(regex[i, j])
+            result.append(regex[i: j])
             i = j
 
         return result

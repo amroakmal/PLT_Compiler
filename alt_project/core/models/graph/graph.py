@@ -5,6 +5,7 @@ class Graph:
     def __init__(self, inp=None):
         if inp is None:
             self.initialNode = Node(True, False, None)
+            self.destination = None
 
         elif isinstance(inp, str):
             self.initialNode = Node(True, False, None)
@@ -24,14 +25,14 @@ class Graph:
         if visited[n.getCurrentId()]:
             return
         visited[n.getCurrentId()] = True
-        for k, v in n.getMap():
+        for k, v in n.getMap().items():
             for i in v:
                 if i not in old_to_new:
                     old_to_new[i] = Node(i, None, None)
                 old_to_new[n].getMap()[k] = [old_to_new[i]]
                 self.clone_dfs(i, visited, old_to_new)
 
-    def bool_to_string(self):
+    def graph_to_string(self):
         out = ''
         visited = [False] * Node.id
         out += self.dfs_print_tree(self.initialNode, visited)
@@ -42,14 +43,13 @@ class Graph:
             return ''
         visited[n.getCurrentId()] = True
         out = str(n.getCurrentId()) + "\n"
-        for k, v in n.getMap():
+        for k, v in n.getMap().items():
             for i in v:
                 edge = k
                 if edge == "\\L":
                     edge = "eps"
                 out += str(n.getCurrentId()) + " " + str(i.getCurrentId()) + " " + edge + "\n"
-                print(n.getCurrentId() + " " + n.getNodeTypes() + " " + n.isStart() + " " + i.getCurrentId() + " "
-                      + i.isEnd() + i.getNodeTypes())
+
                 out += self.dfs_print_tree(i, visited)
         return out
 
@@ -57,6 +57,8 @@ class Graph:
         return self.initialNode
 
     def getDestination(self):
+        if self.destination is None:
+            print(self.graph_to_string())
         return self.destination
 
     def setInitialNode(self, initialNode):

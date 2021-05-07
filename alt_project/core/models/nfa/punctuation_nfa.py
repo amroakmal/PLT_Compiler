@@ -12,7 +12,7 @@ class PunctuationNFA:
 
         for operator in lexicalRulesStore.getOperators():
             operator = operator.replace("\\", "")
-            operatorCharacters = operator.split("")
+            operatorCharacters = list(operator)
             characters = NfaUtility.addConcatSymbolToWords(operatorCharacters)
             postFixExpression = NfaUtility.infixToPostFix(characters)
             nfa = self.createNfa(postFixExpression)

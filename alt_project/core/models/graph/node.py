@@ -10,7 +10,6 @@ class Node:
             self.end = False
             self.nodeTypes = ''
         if input1 is not None and input2 is None and input3 is None:
-            print(input1)
             self.currentId = Node.id
             Node.id += 1
             self.start = input1.isStart()
