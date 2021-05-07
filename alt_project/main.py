@@ -7,6 +7,6 @@ if __name__ == '__main__':
     program = IOManager.read_file('program.txt')
 
     if Lexer.construct_lexical_rules(grammar):
-        print("Generated DFA successfully !")
+        print("successful !")
     else:
-        print("Incorrect grammar format !")
+        print("Failed !")

@@ -1,35 +1,28 @@
 class Node:
     id = 0
 
-    def __init__(self, input1=None, input2=None, input3=None):
-        if input1 is None and input2 is None and input3 is None:
+    def __init__(self, input1=None, input2=None):
+        if input1 is None and input2 is None:
             self.currentId = Node.id
             Node.id += 1
             self.map = {}
             self.start = False
             self.end = False
             self.nodeTypes = ''
-        if input1 is not None and input2 is None and input3 is None:
+        if input1 is not None and input2 is None:
             self.currentId = Node.id
             Node.id += 1
             self.start = input1.isStart()
             self.end = input1.isEnd()
             self.nodeTypes = input1.getNodeTypes()
             self.map = {}
-        if input1 is not None and input2 is not None and input3 is None:
+        if input1 is not None and input2 is not None:
             self.currentId = Node.id
             Node.id += 1
             self.map = {}
             self.start = input1
             self.end = input2
             self.nodeTypes = ''
-
-        self.currentId = Node.id
-        Node.id += 1
-        self.map = {}
-        self.start = input1
-        self.end = input2
-        self.nodeTypes = ''
 
     def addEdge(self, word, destination):
         if word in self.map:
