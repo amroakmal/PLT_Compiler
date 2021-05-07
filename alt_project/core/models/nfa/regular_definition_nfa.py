@@ -1,4 +1,6 @@
+from core.constants import Constants
 from core.models.stack import Stack
+from core.utils.graph_util import GraphUtility
 
 
 class RegularDefinitionNFA:
@@ -40,15 +42,15 @@ class RegularDefinitionNFA:
 
                 i = j
             else:
-                if c == Constant.PLUS:
+                if c == Constants.PLUS:
                     # Plus operator
                     nfa.push(GraphUtility.plusClosure(nfa.pop()))
-                elif c == Constant.KLEENE:
+                elif c == Constants.KLEENE:
                     # Kleene Closure
                     nfa.push(GraphUtility.kleeneClosure(nfa.pop()))
                 elif c == '(':
                     operator.push(c)
-                elif c == Constant.OR:
+                elif c == Constants.OR:
                     operator.push(c)
                 elif c == ')':
                     # Pop until you find a ')'
@@ -78,7 +80,7 @@ class RegularDefinitionNFA:
         expression = ''
         rangee = False
 
-        start = Character.MIN_VALUE
+        start = '_'
 
         definition = definition.replace(" ", "")
 
@@ -92,12 +94,12 @@ class RegularDefinitionNFA:
                     rangee = False
                     separated = None
 
-                    if c in Constant.ALPHABETS:
-                        separated = Constant.ALPHABETS
-                    elif c in Constant.ALPHABETS.upper():
-                        separated = Constant.ALPHABETS.upper()
-                    elif c in Constant.DIGITS:
-                        separated = Constant.DIGITS
+                    if c in Constants.ALPHABETS:
+                        separated = Constants.ALPHABETS
+                    elif c in Constants.ALPHABETS.upper():
+                        separated = Constants.ALPHABETS.upper()
+                    elif c in Constants.DIGITS:
+                        separated = Constants.DIGITS
 
                     # TODO: check if it fails, cuz index() doesnt return -1
                     startIndex = separated.index(start)

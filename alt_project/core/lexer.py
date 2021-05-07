@@ -1,3 +1,4 @@
+from core.models.nfa.keyword_nfa import KeywordNFA
 from core.models.nfa.regular_definition_nfa import RegularDefinitionNFA
 from core.stores.lexical_rules_store import LexicalRulesStore
 

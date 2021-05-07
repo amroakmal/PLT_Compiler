@@ -17,3 +17,21 @@ class Constants:
         RegexFormats.OPERATOR,
         RegexFormats.SYMBOL
     ]
+
+    # LEXICAL ANALYZER
+
+    EPSILON = "\\L"
+    CONCATENATE = "`"
+    OR = "|"
+    KLEENE = "*"
+    PLUS = "+"
+
+    ALPHABETS = "abcdefghijklmnopqrstuvwxyz"
+    DIGITS = "0123456789"
+    SEPARATOR = " "
+    LEXICAL_SAVING_PATH = "output/lexemes.txt"
+
+    # Valid Operators : * ( ) \\L Math Operators: \\+ \\* / - Comparison Operators
+    # : \\= < > Add the \\, To split the regex correctly
+
+    REGEX_OPERATOR = ["*", "+", "|", "`", "(", ")"]

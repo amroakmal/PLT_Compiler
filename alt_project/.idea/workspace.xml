@@ -2,28 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e397112-6e52-4dbe-a0cd-5e30401ed38f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/core/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/lexer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/graph/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/graph/node.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/keywords.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/nfa/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/nfa/regular_definition_nfa.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/operators.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/regular_definition.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/regular_expression.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/stack.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/stores/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/stores/lexical_rules_store.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/utils/lexical_line_processor.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grammar.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/program.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/io_manager.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/models/nfa/keyword_nfa.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/utils/graph_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/lexer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/graph/node.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/graph/node.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/nfa/regular_definition_nfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/nfa/regular_definition_nfa.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +86,7 @@
       <workItem from="1620227338633" duration="3475000" />
       <workItem from="1620236291993" duration="7606000" />
       <workItem from="1620250224769" duration="1784000" />
+      <workItem from="1620330198288" duration="8402000" />
     </task>
     <servers />
   </component>

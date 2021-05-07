@@ -1,100 +1,75 @@
 class Node:
     id = 0
 
-    def __init__(self, start, end):
-        self.map = {}
-        self.start = start
-        self.end = end
+    def __init__(self, input1=None, input2=None, input3=None):
+        if input1 is None and input2 is None and input3 is None:
+            self.currentId = Node.id
+            Node.id += 1
+            self.map = {}
+            self.start = False
+            self.end = False
+            self.nodeTypes = ''
+        if input1 is not None and input2 is None and input3 is None:
+            self.currentId = Node.id
+            Node.id += 1
+            self.start = input1.isStart()
+            self.end = input1.isEnd()
+            self.nodeTypes = input1.getNodeTypes()
+            self.map = {}
+        if input1 is not None and input2 is not None and input3 is None:
+            self.currentId = Node.id
+            Node.id += 1
+            self.map = {}
+            self.start = input1
+            self.end = input2
+            self.nodeTypes = ''
+
         self.currentId = Node.id
+        Node.id += 1
+        self.map = {}
+        self.start = input1
+        self.end = input2
         self.nodeTypes = ''
 
-        Node.id += 1
+    def addEdge(self, word, destination):
+        if word in self.map:
+            # If the character already exists in my hashmap, just add the edge
+            val = self.map[word]
+            val.append(destination)
+            self.map[word] = val
+        else:
+            # Else add the character and create a new edge list
+            self.map[word] = [destination]
 
+    def removeAllEdges(self, s):
+        val = self.map[s]
+        val.clear()
+        self.map[s] = val
 
-'''
-public class Node implements Comparable<Object> {
+    def getMap(self):
+        return self.map
 
-    public Node(boolean start, boolean end) {
-        currentId = id++;
-        map = new HashMap<>();
-        this.start = start;
-        this.end = end;
-        this.nodeTypes = "";
-    }
+    def isStart(self):
+        return self.start
 
-    public Node(boolean start, boolean end, String dfaNodeID) {
-        currentId = id++;
-        map = new HashMap<String, ArrayList<Node>>();
-        this.start = start;
-        this.end = end;
-        this.nodeTypes = "";
-    }
+    def setStart(self, start):
+        self.start = start
 
-    public Node(Node node) {
-        this.currentId = id++;
-        this.start = node.isStart();
-        this.end = node.isEnd();
-        this.nodeTypes = node.getNodeTypes();
-        map = new HashMap<String, ArrayList<Node>>();
-    }
+    def isEnd(self):
+        return self.end
 
-    public Node() {
-        currentId = id++;
-        map = new HashMap<String, ArrayList<Node>>();
-        this.start = false;
-        this.end = false;
-        this.nodeTypes = "";
-    }
+    def setEnd(self, end):
+        self.end = end
 
-    public void addEdge(String word, Node destination) {
-        if (map.containsKey(word)) { // If the character already exists in my hashmap, just add the edge
-            map.get(word).add(destination);
-        } else { // Else add the character and create a new edge list
-            map.put(word, new ArrayList<Node>());
-            map.get(word).add(destination);
-        }
-    }
+    def getCurrentId(self):
+        return self.currentId
 
-    public void removeAllEdges(String s) {
-        map.get(s).clear();
-    }
+    def setNodeTypes(self, types):
+        self.nodeTypes = types
 
-    public HashMap<String, ArrayList<Node>> getMap() {
-        return map;
-    }
+    def getNodeTypes(self):
+        return self.nodeTypes
 
-    public boolean isStart() {
-        return start;
-    }
-
-    public void setStart(boolean start) {
-        this.start = start;
-    }
-
-    public boolean isEnd() {
-        return end;
-    }
-
-    public void setEnd(boolean end) {
-        this.end = end;
-    }
-
-    public int getCurrentId() {
-        return currentId;
-    }
-
-    public void setNodeTypes(String types) {
-        this.nodeTypes = types;
-    }
-
-    public String getNodeTypes() {
-        return nodeTypes;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        Node otherNode = (Node) o;
-        return (this.getCurrentId() - otherNode.getCurrentId());
-    }
-}
-'''
+    def compareTo(self, o):
+        otherNode = o
+        return self.getCurrentId() - otherNode.getCurrentId()
