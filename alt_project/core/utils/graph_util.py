@@ -1,29 +1,33 @@
+from core.constants import Constants
+from core.models.graph.graph import Graph
+
+
 class GraphUtility:
     @staticmethod
     def orr(one=None, two=None):
         if one is not None and two is None:
-            newGraph = Graph(Constant.EPSILON)
-            newGraph.getInitialNode().removeAllEdges(Constant.EPSILON)
-            for graph in graphs:
-                newGraph.getInitialNode().addEdge(Constant.EPSILON, graph.getInitialNode())
+            newGraph = Graph(Constants.EPSILON)
+            newGraph.getInitialNode().removeAllEdges(Constants.EPSILON)
+            for graph in one:
+                newGraph.getInitialNode().addEdge(Constants.EPSILON, graph.getInitialNode())
                 graph.getInitialNode().setStart(False)
-                graph.getDestination().addEdge(Constant.EPSILON, newGraph.getDestination())
+                graph.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
                 graph.getDestination().setEnd(False)
 
             return newGraph
 
         if one is not None and two is not None:
-            newGraph = Graph(Constant.EPSILON)
-            newGraph.getInitialNode().removeAllEdges(Constant.EPSILON)
+            newGraph = Graph(Constants.EPSILON)
+            newGraph.getInitialNode().removeAllEdges(Constants.EPSILON)
 
-            newGraph.getInitialNode().addEdge(Constant.EPSILON, one.getInitialNode())
+            newGraph.getInitialNode().addEdge(Constants.EPSILON, one.getInitialNode())
             one.getInitialNode().setStart(False)
-            one.getDestination().addEdge(Constant.EPSILON, newGraph.getDestination())
+            one.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
             one.getDestination().setEnd(False)
 
-            newGraph.getInitialNode().addEdge(Constant.EPSILON, two.getInitialNode())
+            newGraph.getInitialNode().addEdge(Constants.EPSILON, two.getInitialNode())
             two.getInitialNode().setStart(False)
-            two.getDestination().addEdge(Constant.EPSILON, newGraph.getDestination())
+            two.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
             two.getDestination().setEnd(False)
 
             return newGraph
@@ -31,29 +35,29 @@ class GraphUtility:
     @staticmethod
     def kleeneClosure(graph):
 
-        newGraph = Graph(Constant.EPSILON)
+        newGraph = Graph(Constants.EPSILON)
         clonedGraph = Graph(graph)
 
-        newGraph.getInitialNode().addEdge(Constant.EPSILON, clonedGraph.getInitialNode())
+        newGraph.getInitialNode().addEdge(Constants.EPSILON, clonedGraph.getInitialNode())
         clonedGraph.getInitialNode().setStart(False)
-        clonedGraph.getDestination().addEdge(Constant.EPSILON, newGraph.getDestination())
+        clonedGraph.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
         clonedGraph.getDestination().setEnd(False)
-        clonedGraph.getDestination().addEdge(Constant.EPSILON, clonedGraph.getInitialNode())
+        clonedGraph.getDestination().addEdge(Constants.EPSILON, clonedGraph.getInitialNode())
 
         return newGraph
 
     @staticmethod
     def plusClosure(graph):
 
-        newGraph = Graph(Constant.EPSILON)
-        newGraph.getInitialNode().removeAllEdges(Constant.EPSILON)
+        newGraph = Graph(Constants.EPSILON)
+        newGraph.getInitialNode().removeAllEdges(Constants.EPSILON)
         clonedGraph = Graph(graph)
 
-        newGraph.getInitialNode().addEdge(Constant.EPSILON, clonedGraph.getInitialNode())
+        newGraph.getInitialNode().addEdge(Constants.EPSILON, clonedGraph.getInitialNode())
         clonedGraph.getInitialNode().setStart(False)
-        clonedGraph.getDestination().addEdge(Constant.EPSILON, newGraph.getDestination())
+        clonedGraph.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
         clonedGraph.getDestination().setEnd(False)
-        clonedGraph.getDestination().addEdge(Constant.EPSILON, clonedGraph.getInitialNode())
+        clonedGraph.getDestination().addEdge(Constants.EPSILON, clonedGraph.getInitialNode())
 
         return newGraph
 
@@ -62,7 +66,7 @@ class GraphUtility:
         first = Graph(firstGraph)
         second = Graph(secondGraph)
 
-        first.getDestination().addEdge(Constant.EPSILON, second.getInitialNode())
+        first.getDestination().addEdge(Constants.EPSILON, second.getInitialNode())
         first.getDestination().setEnd(False)
         second.getInitialNode().setStart(False)
         first.setDestination(second.getDestination())

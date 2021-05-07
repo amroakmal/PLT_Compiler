@@ -1,23 +1,22 @@
-import node
-
+from .node import Node
 
 class Graph:
 
     def __init__(self, inp=None):
         if inp is None:
-            self.initialNode = node.Node(True, False, None)
+            self.initialNode = Node(True, False, None)
 
         elif isinstance(inp, str):
-            self.initialNode = node.Node(True, False, None)
-            self.destination = node.Node(False, True, None)
+            self.initialNode = Node(True, False, None)
+            self.destination = Node(False, True, None)
             self.initialNode.addEdge(inp, self.destination)
 
         elif isinstance(inp, Graph):
-            self.initialNode = node.Node(inp.initialNode, None, None)
+            self.initialNode = Node(inp.initialNode, None, None)
             old_to_new = {
                 inp.initialNode: self.initialNode
             }
-            visited = [False] * node.Node.id
+            visited = [False] * Node.id
             self.clone_dfs(inp.initialNode, visited, old_to_new)
             self.destination = old_to_new.get(inp.destination)
 
@@ -28,13 +27,13 @@ class Graph:
         for k, v in n.getMap():
             for i in v:
                 if i not in old_to_new:
-                    old_to_new[i] = node.Node(i, None, None)
+                    old_to_new[i] = Node(i, None, None)
                 old_to_new[n].getMap()[k] = [old_to_new[i]]
                 self.clone_dfs(i, visited, old_to_new)
 
     def bool_to_string(self):
         out = ''
-        visited = [False] * node.Node.id
+        visited = [False] * Node.id
         out += self.dfs_print_tree(self.initialNode, visited)
         return out
 
@@ -54,3 +53,14 @@ class Graph:
                 out += self.dfs_print_tree(i, visited)
         return out
 
+    def getInitialNode(self):
+        return self.initialNode
+
+    def getDestination(self):
+        return self.destination
+
+    def setInitialNode(self, initialNode):
+        self.initialNode = initialNode
+
+    def setDestination(self, destination):
+        self.destination = destination

@@ -1,3 +1,4 @@
+from core.models.graph.graph import Graph
 from core.models.stack import Stack
 from core.utils.nfa_util import NfaUtility
 

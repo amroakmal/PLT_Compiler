@@ -1,4 +1,5 @@
 from core.constants import Constants
+from core.models.graph.graph import Graph
 from core.models.stack import Stack
 from core.utils.graph_util import GraphUtility
 from core.utils.nfa_util import NfaUtility

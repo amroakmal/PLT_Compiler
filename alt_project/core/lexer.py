@@ -13,9 +13,9 @@ class Lexer:
 
         if rulesCont.isValid():
             NFACombined = Lexer.getCombinedNFA(rulesCont)
-            DFA = DFA(NFACombined)
-            minimalDFA = DFAOptimizer(DFA)
-            tokenizer = Tokenizer(minimalDFA, rulesCont.getRegularExpressionsKeys())
+            # DFA = DFA(NFACombined)
+            # minimalDFA = DFAOptimizer(DFA)
+            # tokenizer = Tokenizer(minimalDFA, rulesCont.getRegularExpressionsKeys())
             return True
         return False
 

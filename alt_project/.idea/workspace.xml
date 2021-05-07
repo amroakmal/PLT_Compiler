@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4e397112-6e52-4dbe-a0cd-5e30401ed38f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/core/models/nfa/nfa.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/nfa/punctuation_nfa.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/models/nfa/regular_expression_nfa.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/utils/nfa_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/lexer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/graph/graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/graph/graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/graph/node.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/graph/node.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/models/nfa/keyword_nfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/nfa/keyword_nfa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models/stack.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/stack.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/nfa/punctuation_nfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/nfa/punctuation_nfa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/nfa/regular_definition_nfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/nfa/regular_definition_nfa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/nfa/regular_expression_nfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/nfa/regular_expression_nfa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/utils/graph_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/utils/graph_util.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +44,8 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\CodeSandbox\python\PLT_Compiler\alt_project\core\models\graph" />
+      <recent name="F:\CodeSandbox\python\PLT_Compiler\alt_project" />
       <recent name="F:\CodeSandbox\python\PLT_Compiler\alt_project\core\models" />
     </key>
   </component>
@@ -90,7 +92,7 @@
       <workItem from="1620250224769" duration="1784000" />
       <workItem from="1620330198288" duration="8402000" />
       <workItem from="1620375117746" duration="9942000" />
-      <workItem from="1620400292131" duration="1863000" />
+      <workItem from="1620400292131" duration="3333000" />
     </task>
     <servers />
   </component>
@@ -113,6 +115,6 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/alt_project$main.coverage" NAME="main Coverage Results" MODIFIED="1620400323575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/alt_project$main.coverage" NAME="main Coverage Results" MODIFIED="1620412029519" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
