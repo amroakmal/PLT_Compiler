@@ -11,14 +11,14 @@ class LexicalLineProcessor:
     instance = None
 
     @staticmethod
-    def getInstance():
+    def get_instance():
         if LexicalLineProcessor.instance is None:
             LexicalLineProcessor.instance = LexicalLineProcessor()
         return LexicalLineProcessor.instance
 
     @staticmethod
-    def processLine(line: str, store):
-        lineRules = None
+    def process_line(line: str, store):
+        line_rules = None
 
         for idx, reg in enumerate(Constants.REGEX_FORMATS):
             regex = re.compile(reg)
@@ -26,24 +26,24 @@ class LexicalLineProcessor:
 
             if match is not None:
                 if idx == 0:
-                    lineRules = RegularDefinition(match.group(1), match.group(2))
+                    line_rules = RegularDefinition(match.group(1), match.group(2))
                     print('line:: ' + line + '  ---> type: def')
                     break
                 if idx == 1:
-                    lineRules = RegularExpression(match.group(1), match.group(2))
+                    line_rules = RegularExpression(match.group(1), match.group(2))
                     print('line:: ' + line + '  ---> type: exp')
                     break
                 if idx == 2:
-                    lineRules = Keywords(match.group(1))
+                    line_rules = Keywords(match.group(1))
                     print('line:: ' + line + '  ---> type: key')
                     break
                 if idx == 3:
-                    lineRules = Operators(match.group(1))
+                    line_rules = Operators(match.group(1))
                     print('line:: ' + line + '  ---> type: op')
                     break
 
-        if lineRules is None:
+        if line_rules is None:
             return False
 
-        lineRules.addRule(store)
+        line_rules.add_rule(store)
         return True

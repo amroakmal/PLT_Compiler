@@ -3,28 +3,28 @@ class Node:
 
     def __init__(self, input1=None, input2=None):
         if input1 is None and input2 is None:
-            self.currentId = Node.id
+            self.current_id = Node.id
             Node.id += 1
             self.map = {}
             self.start = False
             self.end = False
-            self.nodeTypes = ''
+            self.node_types = ''
         if input1 is not None and input2 is None:
-            self.currentId = Node.id
+            self.current_id = Node.id
             Node.id += 1
-            self.start = input1.isStart()
-            self.end = input1.isEnd()
-            self.nodeTypes = input1.getNodeTypes()
+            self.start = input1.is_start()
+            self.end = input1.is_end()
+            self.node_types = input1.get_node_types()
             self.map = {}
         if input1 is not None and input2 is not None:
-            self.currentId = Node.id
+            self.current_id = Node.id
             Node.id += 1
             self.map = {}
             self.start = input1
             self.end = input2
-            self.nodeTypes = ''
+            self.node_types = ''
 
-    def addEdge(self, word, destination):
+    def add_edge(self, word, destination):
         if word in self.map:
             # If the character already exists in my hashmap, just add the edge
             val = self.map[word]
@@ -34,35 +34,35 @@ class Node:
             # Else add the character and create a new edge list
             self.map[word] = [destination]
 
-    def removeAllEdges(self, s):
+    def remove_all_edges(self, s):
         val = self.map[s]
         val.clear()
         self.map[s] = val
 
-    def getMap(self):
+    def get_map(self):
         return self.map
 
-    def isStart(self):
+    def is_start(self):
         return self.start
 
-    def setStart(self, start):
+    def set_start(self, start):
         self.start = start
 
-    def isEnd(self):
+    def is_end(self):
         return self.end
 
-    def setEnd(self, end):
+    def set_end(self, end):
         self.end = end
 
-    def getCurrentId(self):
-        return self.currentId
+    def get_current_id(self):
+        return self.current_id
 
-    def setNodeTypes(self, types):
-        self.nodeTypes = types
+    def set_node_types(self, types):
+        self.node_types = types
 
-    def getNodeTypes(self):
-        return self.nodeTypes
+    def get_node_types(self):
+        return self.node_types
 
-    def compareTo(self, o):
-        otherNode = o
-        return self.getCurrentId() - otherNode.getCurrentId()
+    def compare_to(self, o):
+        other_node = o
+        return self.get_current_id() - other_node.get_current_id()

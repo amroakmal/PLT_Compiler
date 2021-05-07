@@ -6,68 +6,68 @@ class GraphUtility:
     @staticmethod
     def orr(one=None, two=None):
         if one is not None and two is None:
-            newGraph = Graph(Constants.EPSILON)
-            newGraph.getInitialNode().removeAllEdges(Constants.EPSILON)
+            new_graph = Graph(Constants.EPSILON)
+            new_graph.get_initial_node().remove_all_edges(Constants.EPSILON)
             for graph in one:
-                newGraph.getInitialNode().addEdge(Constants.EPSILON, graph.getInitialNode())
-                graph.getInitialNode().setStart(False)
-                graph.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
-                graph.getDestination().setEnd(False)
+                new_graph.get_initial_node().add_edge(Constants.EPSILON, graph.get_initial_node())
+                graph.get_initial_node().set_start(False)
+                graph.get_destination().add_edge(Constants.EPSILON, new_graph.get_destination())
+                graph.get_destination().set_end(False)
 
-            return newGraph
+            return new_graph
 
         if one is not None and two is not None:
-            newGraph = Graph(Constants.EPSILON)
-            newGraph.getInitialNode().removeAllEdges(Constants.EPSILON)
+            new_graph = Graph(Constants.EPSILON)
+            new_graph.get_initial_node().remove_all_edges(Constants.EPSILON)
 
-            newGraph.getInitialNode().addEdge(Constants.EPSILON, one.getInitialNode())
-            one.getInitialNode().setStart(False)
-            one.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
-            one.getDestination().setEnd(False)
+            new_graph.get_initial_node().add_edge(Constants.EPSILON, one.get_initial_node())
+            one.get_initial_node().set_start(False)
+            one.get_destination().add_edge(Constants.EPSILON, new_graph.get_destination())
+            one.get_destination().set_end(False)
 
-            newGraph.getInitialNode().addEdge(Constants.EPSILON, two.getInitialNode())
-            two.getInitialNode().setStart(False)
-            two.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
-            two.getDestination().setEnd(False)
+            new_graph.get_initial_node().add_edge(Constants.EPSILON, two.get_initial_node())
+            two.get_initial_node().set_start(False)
+            two.get_destination().add_edge(Constants.EPSILON, new_graph.get_destination())
+            two.get_destination().set_end(False)
 
-            return newGraph
-
-    @staticmethod
-    def kleeneClosure(graph):
-
-        newGraph = Graph(Constants.EPSILON)
-        clonedGraph = Graph(graph)
-
-        newGraph.getInitialNode().addEdge(Constants.EPSILON, clonedGraph.getInitialNode())
-        clonedGraph.getInitialNode().setStart(False)
-        clonedGraph.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
-        clonedGraph.getDestination().setEnd(False)
-        clonedGraph.getDestination().addEdge(Constants.EPSILON, clonedGraph.getInitialNode())
-
-        return newGraph
+            return new_graph
 
     @staticmethod
-    def plusClosure(graph):
+    def kleene_closure(graph):
 
-        newGraph = Graph(Constants.EPSILON)
-        newGraph.getInitialNode().removeAllEdges(Constants.EPSILON)
-        clonedGraph = Graph(graph)
+        new_graph = Graph(Constants.EPSILON)
+        cloned_graph = Graph(graph)
 
-        newGraph.getInitialNode().addEdge(Constants.EPSILON, clonedGraph.getInitialNode())
-        clonedGraph.getInitialNode().setStart(False)
-        clonedGraph.getDestination().addEdge(Constants.EPSILON, newGraph.getDestination())
-        clonedGraph.getDestination().setEnd(False)
-        clonedGraph.getDestination().addEdge(Constants.EPSILON, clonedGraph.getInitialNode())
+        new_graph.get_initial_node().add_edge(Constants.EPSILON, cloned_graph.get_initial_node())
+        cloned_graph.get_initial_node().set_start(False)
+        cloned_graph.get_destination().add_edge(Constants.EPSILON, new_graph.get_destination())
+        cloned_graph.get_destination().set_end(False)
+        cloned_graph.get_destination().add_edge(Constants.EPSILON, cloned_graph.get_initial_node())
 
-        return newGraph
+        return new_graph
 
     @staticmethod
-    def concatenate(firstGraph, secondGraph):
-        first = Graph(firstGraph)
-        second = Graph(secondGraph)
+    def plus_closure(graph):
 
-        first.getDestination().addEdge(Constants.EPSILON, second.getInitialNode())
-        first.getDestination().setEnd(False)
-        second.getInitialNode().setStart(False)
-        first.setDestination(second.getDestination())
+        new_graph = Graph(Constants.EPSILON)
+        new_graph.get_initial_node().remove_all_edges(Constants.EPSILON)
+        cloned_graph = Graph(graph)
+
+        new_graph.get_initial_node().add_edge(Constants.EPSILON, cloned_graph.get_initial_node())
+        cloned_graph.get_initial_node().set_start(False)
+        cloned_graph.get_destination().add_edge(Constants.EPSILON, new_graph.get_destination())
+        cloned_graph.get_destination().set_end(False)
+        cloned_graph.get_destination().add_edge(Constants.EPSILON, cloned_graph.get_initial_node())
+
+        return new_graph
+
+    @staticmethod
+    def concatenate(first_graph, second_graph):
+        first = Graph(first_graph)
+        second = Graph(second_graph)
+
+        first.get_destination().add_edge(Constants.EPSILON, second.get_initial_node())
+        first.get_destination().set_end(False)
+        second.get_initial_node().set_start(False)
+        first.set_destination(second.get_destination())
         return first

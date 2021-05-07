@@ -5,5 +5,5 @@ class RegularDefinition:
         self.key = key
         self.value = value
 
-    def addRule(self, store):
-        store.putRegularDefinition(self.key, self.value)
+    def add_rule(self, store):
+        store.put_regular_definition(self.key, self.value)

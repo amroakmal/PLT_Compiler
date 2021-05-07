@@ -4,22 +4,22 @@ from core.utils.nfa_util import NfaUtility
 
 
 class PunctuationNFA:
-    def __init__(self, rulesCont):
-        self.punctuationNfa = {}
-        self.punctuationToNfa(rulesCont)
+    def __init__(self, rules_cont):
+        self.punctuation_nfa = {}
+        self.punctuation_to_nfa(rules_cont)
 
-    def punctuationToNfa(self, lexicalRulesStore):
+    def punctuation_to_nfa(self, lexical_rules_store):
 
-        for operator in lexicalRulesStore.getOperators():
+        for operator in lexical_rules_store.get_operators():
             operator = operator.replace("\\", "")
             operatorCharacters = list(operator)
-            characters = NfaUtility.addConcatSymbolToWords(operatorCharacters)
-            postFixExpression = NfaUtility.infixToPostFix(characters)
-            nfa = self.createNfa(postFixExpression)
-            self.punctuationNfa[operator] = nfa
-            nfa.getDestination().setNodeTypes(operator)
+            characters = NfaUtility.add_concat_symbol_to_words(operatorCharacters)
+            postFixExpression = NfaUtility.infix_to_post_fix(characters)
+            nfa = self.create_nfa(postFixExpression)
+            self.punctuation_nfa[operator] = nfa
+            nfa.get_destination().set_node_types(operator)
 
-    def createNfa(self, expression):
+    def create_nfa(self, expression):
         # create a stack
         nfa = Stack()
 
@@ -29,5 +29,5 @@ class PunctuationNFA:
 
             return nfa.pop()
 
-    def getPunctuationNfa(self):
-        return self.punctuationNfa
+    def get_punctuation_nfa(self):
+        return self.punctuation_nfa

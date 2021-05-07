@@ -5,7 +5,7 @@ class Keywords:
         # holds keywords separated by space
         self.keywords = keywords.split(" ")
 
-    def addRule(self, store):
+    def add_rule(self, store):
         for keyword in self.keywords:
             if keyword != "":
-                store.addKeyword(keyword)
+                store.add_keyword(keyword)

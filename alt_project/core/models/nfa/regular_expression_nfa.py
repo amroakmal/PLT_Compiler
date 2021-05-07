@@ -6,28 +6,28 @@ from core.utils.nfa_util import NfaUtility
 
 
 class RegularExpressionNFA:
-    def __init__(self, rulesCont, definitionNfa):
-        self.regExpressionNfa = {}
-        self.definitionNfa = definitionNfa
-        self.lexicalRulesStore = rulesCont
-        self.backlashSymbols = self.generateSymbols()
-        self.regexToNfa(rulesCont)
+    def __init__(self, rules_cont, definition_nfa):
+        self.reg_expression_nfa = {}
+        self.definition_nfa = definition_nfa
+        self.lexical_rules_store = rules_cont
+        self.backlash_symbols = self.generate_symbols()
+        self.regex_to_nfa(rules_cont)
 
-    def regexToNfa(self, lexicalRulesStore):
-        for definitionKey in lexicalRulesStore.getRegularExpressionsKeys():
-            definitionValue = lexicalRulesStore.getRegularExpression(definitionKey)
-            definitionValue = definitionValue.replace(" ", "")
+    def regex_to_nfa(self, lexical_rules_store):
+        for definition_key in lexical_rules_store.get_regular_expressions_keys():
+            definition_value = lexical_rules_store.get_regular_expression(definition_key)
+            definition_value = definition_value.replace(" ", "")
 
-            words = self.separateRegularExpression(definitionValue)
-            words = self.addConcatSymbolToRegex(words)
-            postFixExpression = NfaUtility.infixToPostFix(words)
-            nfa = self.createNfa(postFixExpression)
-            self.regExpressionNfa[definitionKey] = nfa
-            nfa.getDestination().setNodeTypes(definitionKey)
+            words = self.separate_regular_expression(definition_value)
+            words = self.add_concat_symbol_to_regex(words)
+            post_fix_expression = NfaUtility.infix_to_post_fix(words)
+            nfa = self.create_nfa(post_fix_expression)
+            self.reg_expression_nfa[definition_key] = nfa
+            nfa.get_destination().set_node_types(definition_key)
 
-    def separateRegularExpression(self, regex):
+    def separate_regular_expression(self, regex):
         result = []
-        symbols = self.lexicalRulesStore.getSymbols()
+        symbols = self.lexical_rules_store.get_symbols()
 
         i = 0
         while i < len(regex):
@@ -37,7 +37,7 @@ class RegularExpressionNFA:
             while k < len(regex):
                 # K + 1 - > Substring is exclusive
                 temp = regex[i: k + 1]
-                if temp in self.definitionNfa or temp in symbols or temp in self.backlashSymbols:
+                if temp in self.definition_nfa or temp in symbols or temp in self.backlash_symbols:
                     # Don't break from the loop (Digit / Digit(s))
                     j = k + 1
 
@@ -48,7 +48,7 @@ class RegularExpressionNFA:
 
         return result
 
-    def addConcatSymbolToRegex(self, word):
+    def add_concat_symbol_to_regex(self, word):
         output = [word[0]]
 
         for w in word:
@@ -58,73 +58,73 @@ class RegularExpressionNFA:
                 output.append(Constants.CONCATENATE)
 
             # If 2 words
-            if not NfaUtility.isRegexOperator(output[len(output) - 1]) and not NfaUtility.isRegexOperator(w):
+            if not NfaUtility.is_regex_operator(output[len(output) - 1]) and not NfaUtility.is_regex_operator(w):
                 output.append(Constants.CONCATENATE)
 
                 # If the previous is * or + and the next is not or
-                if NfaUtility.isKleeneOrPlus(output[len(output) - 1]) and w != "|":
+                if NfaUtility.is_kleene_or_plus(output[len(output) - 1]) and w != "|":
                     output.append(Constants.CONCATENATE)
 
             output.append(w)
 
         return output
 
-    def createNfa(self, expression):
+    def create_nfa(self, expression):
         # create a stack
         nfa = Stack()
         # Scan all characters one by one
-        for currentExpression in expression:
-            if NfaUtility.isRegexOperator(currentExpression):
-                if currentExpression == Constants.KLEENE:
+        for current_expression in expression:
+            if NfaUtility.is_regex_operator(current_expression):
+                if current_expression == Constants.KLEENE:
                     g = nfa.pop()
-                    nfa.push(GraphUtility.kleeneClosure(g))
-                elif currentExpression == Constants.PLUS:
+                    nfa.push(GraphUtility.kleene_closure(g))
+                elif current_expression == Constants.PLUS:
                     g = nfa.pop()
-                    nfa.push(GraphUtility.plusClosure(g))
-                elif currentExpression == Constants.OR:
+                    nfa.push(GraphUtility.plus_closure(g))
+                elif current_expression == Constants.OR:
                     right = nfa.pop()
                     left = nfa.pop()
                     nfa.push(GraphUtility.orr(right, left))
-                elif currentExpression == Constants.CONCATENATE:
+                elif current_expression == Constants.CONCATENATE:
                     right = nfa.pop()
                     left = nfa.pop()
                     nfa.push(GraphUtility.concatenate(left, right))
 
             else:
-                if currentExpression in self.definitionNfa:
-                    g = Graph(self.definitionNfa[currentExpression])
+                if current_expression in self.definition_nfa:
+                    g = Graph(self.definition_nfa[current_expression])
                     nfa.push(g)
-                elif currentExpression in self.backlashSymbols and currentExpression != "\\L":
-                    nodeName = currentExpression[1:]
-                    nfa.push(Graph(nodeName))
+                elif current_expression in self.backlash_symbols and current_expression != "\\L":
+                    node_name = current_expression[1:]
+                    nfa.push(Graph(node_name))
                 else:
-                    nfa.push(Graph(currentExpression))
+                    nfa.push(Graph(current_expression))
 
         return nfa.pop()
 
-    def generateSymbols(self):
+    def generate_symbols(self):
         result = []
 
-        for s in self.lexicalRulesStore.getOperators():
+        for s in self.lexical_rules_store.get_operators():
             if s[0] == "\\":
                 result.append(s)
 
-        for s in self.lexicalRulesStore.getRegularExpressionsKeys():
-            regularExpression = self.lexicalRulesStore.getRegularExpression(s)
+        for s in self.lexical_rules_store.get_regular_expressions_keys():
+            regular_expression = self.lexical_rules_store.get_regular_expression(s)
             i = 0
 
-            while i < len(regularExpression):
-                c = regularExpression[i]
+            while i < len(regular_expression):
+                c = regular_expression[i]
                 if c == '\\':
-                    result.append("\\" + regularExpression[i + 1])
+                    result.append("\\" + regular_expression[i + 1])
                     i += 2
                 else:
                     i += 1
 
-        return NfaUtility.removeDuplicates(result)
+        return NfaUtility.remove_duplicates(result)
 
-    def getRegExpressionNfa(self):
-        return self.regExpressionNfa
+    def get_reg_expression_nfa(self):
+        return self.reg_expression_nfa
 
-    def getBackSlashSymbols(self):
-        return self.backlashSymbols
+    def get_back_slash_symbols(self):
+        return self.backlash_symbols

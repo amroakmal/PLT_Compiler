@@ -14,7 +14,7 @@ class NfaUtility:
         return -1
 
     @staticmethod
-    def infixToPostFix(expression):
+    def infix_to_post_fix(expression):
 
         result = []
         stack = Stack()
@@ -45,7 +45,7 @@ class NfaUtility:
         return result
 
     @staticmethod
-    def addConcatSymbolToWords(word):
+    def add_concat_symbol_to_words(word):
 
         output = []
         for w in word:
@@ -56,11 +56,11 @@ class NfaUtility:
         return output
 
     @staticmethod
-    def isKleeneOrPlus(character):
+    def is_kleene_or_plus(character):
         return character == Constants.KLEENE or character == Constants.PLUS
 
     @staticmethod
-    def isRegexOperator(character):
+    def is_regex_operator(character):
         for s in Constants.REGEX_OPERATOR:
             if s == character:
                 return True
@@ -68,9 +68,9 @@ class NfaUtility:
         return False
 
     @staticmethod
-    def removeDuplicates(input):
+    def remove_duplicates(inp):
         result = []
-        for s in input:
+        for s in inp:
             if s not in result:
                 result.append(s)
 

@@ -5,21 +5,21 @@ from core.utils.graph_util import GraphUtility
 
 
 class RegularDefinitionNFA:
-    def __init__(self, rulesCont):
+    def __init__(self, rules_cont):
         self.definitionNfa = {}
-        self.definitionsToNfa(rulesCont)
+        self.definitions_to_nfa(rules_cont)
 
-    def definitionsToNfa(self, lexicalRulesStore):
-        for idx, val in enumerate(lexicalRulesStore.getRegularDefinitionsKeys()):
-            definitionKey = lexicalRulesStore.getRegularDefinitionsKeys()[idx]
-            definitionValue = lexicalRulesStore.getRegularDefinition(definitionKey)
+    def definitions_to_nfa(self, lexical_rules_store):
+        for idx, val in enumerate(lexical_rules_store.get_regular_definitions_keys()):
+            definition_key = lexical_rules_store.get_regular_definitions_keys()[idx]
+            definition_value = lexical_rules_store.get_regular_definition(definition_key)
 
-            definitionValue = self.separateRDByOrs(definitionValue)
+            definition_value = self.separate_rd_by_ors(definition_value)
 
-            currentDefinitionNfa = self.createNfa(definitionValue)
-            self.definitionNfa[definitionKey] = currentDefinitionNfa
+            current_definition_nfa = self.create_nfa(definition_value)
+            self.definitionNfa[definition_key] = current_definition_nfa
 
-    def createNfa(self, definition: str):
+    def create_nfa(self, definition: str):
 
         nfa = Stack()
         operator = Stack()
@@ -35,20 +35,20 @@ class RegularDefinitionNFA:
                 while j < len(definition) and (definition[j].isalpha() or definition[j].isnumeric()):
                     j += 1
 
-                nodeName = definition[i: j]
-                if len(nodeName) == 1:
-                    nfa.push(Graph(nodeName))
-                elif nodeName in self.definitionNfa:
-                    nfa.push(self.definitionNfa[nodeName])
+                node_name = definition[i: j]
+                if len(node_name) == 1:
+                    nfa.push(Graph(node_name))
+                elif node_name in self.definitionNfa:
+                    nfa.push(self.definitionNfa[node_name])
 
                 i = j
             else:
                 if c == Constants.PLUS:
                     # Plus operator
-                    nfa.push(GraphUtility.plusClosure(nfa.pop()))
+                    nfa.push(GraphUtility.plus_closure(nfa.pop()))
                 elif c == Constants.KLEENE:
                     # Kleene Closure
-                    nfa.push(GraphUtility.kleeneClosure(nfa.pop()))
+                    nfa.push(GraphUtility.kleene_closure(nfa.pop()))
                 elif c == '(':
                     operator.push(c)
                 elif c == Constants.OR:
@@ -73,10 +73,10 @@ class RegularDefinitionNFA:
         while not nfa.is_empty():
             merge.append(nfa.pop())
 
-        mergedGraph = GraphUtility.orr(merge)
-        return mergedGraph
+        merged_graph = GraphUtility.orr(merge)
+        return merged_graph
 
-    def separateRDByOrs(self, definition: str):
+    def separate_rd_by_ors(self, definition: str):
 
         expression = ''
         rangee = False
@@ -102,20 +102,20 @@ class RegularDefinitionNFA:
                     elif c in Constants.DIGITS:
                         separated = Constants.DIGITS
 
-                    # TODO: check if it fails, cuz index() doesnt return -1
-                    startIndex = separated.index(start)
-                    endIndex = separated.index(c)
+
+                    start_index = separated.index(start)
+                    end_index = separated.index(c)
 
                     expression += '|'
 
-                    iterator = startIndex + 1
+                    iterator = start_index + 1
 
-                    while iterator < endIndex:
+                    while iterator < end_index:
                         expression += separated[iterator]
                         expression += '|'
                         iterator += 1
 
-                    expression += separated[endIndex]
+                    expression += separated[end_index]
 
             else:
                 if not rangee:
@@ -126,5 +126,5 @@ class RegularDefinitionNFA:
 
         return expression
 
-    def getDefinitionNfa(self):
+    def get_definition_nfa(self):
         return self.definitionNfa

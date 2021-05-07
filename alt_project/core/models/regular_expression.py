@@ -8,12 +8,12 @@ class RegularExpression:
         self.key = key
         self.value = value
 
-    def addRule(self, store):
+    def add_rule(self, store):
         matches = re.finditer(Constants.REGEX_FORMATS[4], self.value)
 
         for matchNum, match in enumerate(matches, start=1):
-            for groupNum in range(0, len(match.groups())):
-                groupNum = groupNum + 1
-                store.addSymbol(match.group(groupNum))
+            for group_num in range(0, len(match.groups())):
+                group_num = group_num + 1
+                store.add_symbol(match.group(group_num))
 
-        store.putRegularExpression(self.key, self.value)
+        store.put_regular_expression(self.key, self.value)

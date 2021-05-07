@@ -11,7 +11,7 @@ class Lexer:
     def construct_lexical_rules(grammar: str):
         rulesCont = LexicalRulesStore(grammar)
 
-        if rulesCont.isValid():
+        if rulesCont.is_valid():
             NFACombined = Lexer.getCombinedNFA(rulesCont)
             # DFA = DFA(NFACombined)
             # minimalDFA = DFAOptimizer(DFA)
@@ -20,11 +20,11 @@ class Lexer:
         return False
 
     @staticmethod
-    def getCombinedNFA(rulesCont):
-        regularDefinition = RegularDefinitionNFA(rulesCont)
-        keyword = KeywordNFA(rulesCont)
-        punctuation = PunctuationNFA(rulesCont)
-        regex = RegularExpressionNFA(rulesCont, regularDefinition.getDefinitionNfa())
-        NFACombined = NFA(regularDefinition, keyword, punctuation, regex)
-        combinedNFAs = NFACombined.getCombinedGraph()
+    def getCombinedNFA(rules_cont):
+        regular_definition = RegularDefinitionNFA(rules_cont)
+        keyword = KeywordNFA(rules_cont)
+        punctuation = PunctuationNFA(rules_cont)
+        regex = RegularExpressionNFA(rules_cont, regular_definition.get_definition_nfa())
+        NFACombined = NFA(regular_definition, keyword, punctuation, regex)
+        combinedNFAs = NFACombined.get_combined_graph()
         return combinedNFAs

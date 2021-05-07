@@ -6,20 +6,20 @@ from core.utils.nfa_util import NfaUtility
 
 
 class KeywordNFA:
-    def __init__(self, rulesCont):
-        self.keywordNfa = {}
-        self.keywordToNfa(rulesCont)
+    def __init__(self, rules_cont):
+        self.keyword_nfa = {}
+        self.keyword_to_nfa(rules_cont)
 
-    def keywordToNfa(self, lexicalRulesStore):
-        for keyword in lexicalRulesStore.getKeywords():
-            keywordCharacters = list(keyword)
-            characters = NfaUtility.addConcatSymbolToWords(keywordCharacters)
-            postFixExpression = NfaUtility.infixToPostFix(characters)
-            nfa = self.createNfa(postFixExpression)
-            self.keywordNfa[keyword] = nfa
-            nfa.getDestination().setNodeTypes(keyword)
+    def keyword_to_nfa(self, lexical_rules_store):
+        for keyword in lexical_rules_store.get_keywords():
+            keyword_characters = list(keyword)
+            characters = NfaUtility.add_concat_symbol_to_words(keyword_characters)
+            post_fix_expression = NfaUtility.infix_to_post_fix(characters)
+            nfa = self.create_nfa(post_fix_expression)
+            self.keyword_nfa[keyword] = nfa
+            nfa.get_destination().set_node_types(keyword)
 
-    def createNfa(self, expression):
+    def create_nfa(self, expression):
         # create a stack
         nfa = Stack()
 
@@ -34,5 +34,5 @@ class KeywordNFA:
 
         return nfa.pop()
 
-    def getKeywordNfa(self):
-        return self.keywordNfa
+    def get_keyword_nfa(self):
+        return self.keyword_nfa
