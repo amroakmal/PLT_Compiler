@@ -2,7 +2,7 @@ class Stack:
     def __init__(self):
         self.items = []
 
-    def peak(self):
+    def peek(self):
         return self.items[-1]
 
     def push(self, item):
