@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class Node:
     id = 0
 
@@ -66,3 +69,9 @@ class Node:
     def compare_to(self, o):
         other_node = o
         return self.get_current_id() - other_node.get_current_id()
+
+    # def __eq__(self, other):
+    #     return self.current_id == other.current_id
+    #
+    # def __hash__(self):
+    #     return hash(f"{datetime.now()}" * self.current_id)

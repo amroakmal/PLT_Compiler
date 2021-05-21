@@ -1,5 +1,8 @@
+from core.models.dfa.dfa import DFAA
+from core.models.dfa.dfa_optimizer import DFAOptimizer
 from core.models.nfa.keyword_nfa import KeywordNFA
 from core.models.nfa.nfa import NFA
+
 from core.models.nfa.punctuation_nfa import PunctuationNFA
 from core.models.nfa.regular_definition_nfa import RegularDefinitionNFA
 from core.models.nfa.regular_expression_nfa import RegularExpressionNFA
@@ -9,12 +12,12 @@ from core.stores.lexical_rules_store import LexicalRulesStore
 class Lexer:
     @staticmethod
     def construct_lexical_rules(grammar: str):
-        rulesCont = LexicalRulesStore(grammar)
+        rules_store = LexicalRulesStore(grammar)
 
-        if rulesCont.is_valid():
-            NFACombined = Lexer.getCombinedNFA(rulesCont)
-            # DFA = DFA(NFACombined)
-            # minimalDFA = DFAOptimizer(DFA)
+        if rules_store.is_valid():
+            NFACombined = Lexer.getCombinedNFA(rules_store)
+            DFA = DFAA(NFACombined)
+            minimalDFA = DFAOptimizer(DFA)
             # tokenizer = Tokenizer(minimalDFA, rulesCont.getRegularExpressionsKeys())
             return True
         return False
