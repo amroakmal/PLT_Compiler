@@ -12,8 +12,6 @@ if __name__ == '__main__':
 
     Parsers.parser_start()
 
-    print('hello')
-
     if result1 is not None:
         print("successful !")
         print(get_next_token(result1))
