@@ -102,7 +102,6 @@ class RegularDefinitionNFA:
                     elif c in Constants.DIGITS:
                         separated = Constants.DIGITS
 
-
                     start_index = separated.index(start)
                     end_index = separated.index(c)
 

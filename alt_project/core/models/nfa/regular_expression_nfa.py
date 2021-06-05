@@ -20,7 +20,12 @@ class RegularExpressionNFA:
 
             words = self.separate_regular_expression(definition_value)
             words = self.add_concat_symbol_to_regex(words)
+
+            # print(words)
+            # print('-----------------')
+
             post_fix_expression = NfaUtility.infix_to_post_fix(words)
+
             nfa = self.create_nfa(post_fix_expression)
             self.reg_expression_nfa[definition_key] = nfa
             nfa.get_destination().set_node_types(definition_key)
@@ -51,19 +56,19 @@ class RegularExpressionNFA:
     def add_concat_symbol_to_regex(self, word):
         output = [word[0]]
 
-        for w in word:
+        for w in word[1:]:
 
             # If current letter is ( and previous not equal | -> digit | (digits)
-            if output[len(output) - 1] != Constants.OR and w == "(":
+            if (output[len(output) - 1] != Constants.OR) and (w == "("):
                 output.append(Constants.CONCATENATE)
 
             # If 2 words
-            if not NfaUtility.is_regex_operator(output[len(output) - 1]) and not NfaUtility.is_regex_operator(w):
+            if (not NfaUtility.is_regex_operator(output[len(output) - 1])) and (not NfaUtility.is_regex_operator(w)):
                 output.append(Constants.CONCATENATE)
 
                 # If the previous is * or + and the next is not or
-                if NfaUtility.is_kleene_or_plus(output[len(output) - 1]) and w != "|":
-                    output.append(Constants.CONCATENATE)
+            if NfaUtility.is_kleene_or_plus(output[len(output) - 1]) and w != "|":
+                output.append(Constants.CONCATENATE)
 
             output.append(w)
 
@@ -94,7 +99,7 @@ class RegularExpressionNFA:
                 if current_expression in self.definition_nfa:
                     g = Graph(self.definition_nfa[current_expression])
                     nfa.push(g)
-                elif current_expression in self.backlash_symbols and current_expression != "\\L":
+                elif current_expression in self.backlash_symbols and current_expression != Constants.EPSILON:
                     node_name = current_expression[1:]
                     nfa.push(Graph(node_name))
                 else:

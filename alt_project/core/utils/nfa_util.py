@@ -46,13 +46,12 @@ class NfaUtility:
 
     @staticmethod
     def add_concat_symbol_to_words(word):
-
         output = []
         for w in word:
             output.append(w)
             output.append(Constants.CONCATENATE)
 
-        output.append(word[len(word) - 1])
+        output.pop()
         return output
 
     @staticmethod

@@ -12,10 +12,10 @@ class PunctuationNFA:
 
         for operator in lexical_rules_store.get_operators():
             operator = operator.replace("\\", "")
-            operatorCharacters = list(operator)
-            characters = NfaUtility.add_concat_symbol_to_words(operatorCharacters)
-            postFixExpression = NfaUtility.infix_to_post_fix(characters)
-            nfa = self.create_nfa(postFixExpression)
+            operator_characters = list(operator)
+            characters = NfaUtility.add_concat_symbol_to_words(operator_characters)
+            post_fix_expression = NfaUtility.infix_to_post_fix(characters)
+            nfa = self.create_nfa(post_fix_expression)
             self.punctuation_nfa[operator] = nfa
             nfa.get_destination().set_node_types(operator)
 

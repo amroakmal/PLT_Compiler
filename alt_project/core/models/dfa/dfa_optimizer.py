@@ -6,117 +6,116 @@ from core.utils.dfa_util import DfaUtility
 
 
 class DFAOptimizer:
-    def __init__(self, DFA):
+    def __init__(self, dfa):
         self.DFAMinimized = Graph()
         self.finalStates = {}
-        self.minimizeDFA(DFA)
+        self.minimize_dfa(dfa)
 
-    def minimizeDFA(self, DFA):
-        nodeParents = {}
-        DFATransTable = DFA.getDFATransTable()
+    def minimize_dfa(self, dfa):
+        node_parents = {}
+        dfa_trans_table = dfa.get_dfa_trans_table()
         grouping = {}
 
-        nonAcceptingState = []
-        acceptingState = []
-        for string in DFATransTable.keys():
-            node = DFATransTable[string]
+        non_accepting_state = []
+        accepting_state = []
+        for string in dfa_trans_table.keys():
+            node = dfa_trans_table[string]
             if node.is_end():
-                acceptingState.append(node)
+                accepting_state.append(node)
             else:
-                nonAcceptingState.append(node)
+                non_accepting_state.append(node)
 
-        grouping[nonAcceptingState[0].get_current_id()] = nonAcceptingState
+        grouping[non_accepting_state[0].get_current_id()] = non_accepting_state
 
-        while len(acceptingState) != 0:
+        while len(accepting_state) != 0:
             partition = []
             i = 1
-            while i < len(acceptingState):
-                if acceptingState[i].get_node_types() == acceptingState[0].get_node_types():
-                    partition.append(acceptingState.pop(i))
+            while i < len(accepting_state):
+                if accepting_state[i].get_node_types() == accepting_state[0].get_node_types():
+                    partition.append(accepting_state.pop(i))
                     i -= 1
                 i += 1
 
-            partition.append(acceptingState.pop(0))
-            self.initNodeParents(partition, nodeParents)
+            partition.append(accepting_state.pop(0))
+            self.init_node_parents(partition, node_parents)
             grouping[partition[0].get_current_id()] = partition
 
-        self.initNodeParents(nonAcceptingState, nodeParents)
-        newGrouping = grouping
+        self.init_node_parents(non_accepting_state, node_parents)
+        new_grouping = grouping
 
         # Do.. While
         while True:
-            grouping = newGrouping
-            newGrouping = self.constructGroupings(grouping, nodeParents)
-            if not (len(newGrouping) != len(grouping)):
+            grouping = new_grouping
+            new_grouping = self.construct_groupings(grouping, node_parents)
+            if not (len(new_grouping) != len(grouping)):
                 break
 
-        self.linkDFAFinalGroupings(newGrouping, DFA)
+        self.link_dfa_final_groupings(new_grouping, dfa)
 
-    def linkDFAFinalGroupings(self, finalGroupings, DFA):
+    def link_dfa_final_groupings(self, final_groupings, dfa):
         self.DFAMinimized = Graph()
-        transTable = {}
-        for partitionID in finalGroupings.keys():
+        trans_table = {}
+        for partitionID in final_groupings.keys():
             node = Node()
-            node.set_node_types(finalGroupings[partitionID][0].get_node_types())
-            if finalGroupings[partitionID][0].is_end():
+            node.set_node_types(final_groupings[partitionID][0].get_node_types())
+            if final_groupings[partitionID][0].is_end():
                 node.set_end(True)
 
-            transTable[partitionID] = node
+            trans_table[partitionID] = node
 
-        initialNodeGroupId = DfaUtility.findPartitionOfNode(DFA.getDFA().get_initial_node(), finalGroupings)
-        initialNode = transTable[initialNodeGroupId]
-        initialNode.set_start(True)
+        initial_node_group_id = DfaUtility.findPartitionOfNode(dfa.get_dfa().get_initial_node(), final_groupings)
+        initial_node = trans_table[initial_node_group_id]
+        initial_node.set_start(True)
 
-        self.DFAMinimized.set_initial_node(initialNode)
-        for currentID in finalGroupings.keys():
-            firstNodeOfGroup = finalGroupings[currentID][0]
-            for input in firstNodeOfGroup.get_map().keys():
-                self.updateFinalStates(input, currentID, finalGroupings, transTable)
-                nextNode = firstNodeOfGroup.get_map()[input][0]
-                groupingsID = DfaUtility.findPartitionOfNode(nextNode, finalGroupings)
-                transTable[currentID].add_edge(input, transTable[groupingsID])
+        self.DFAMinimized.set_initial_node(initial_node)
+        for currentID in final_groupings.keys():
+            first_node_of_group = final_groupings[currentID][0]
+            for my_input in first_node_of_group.get_map().keys():
+                self.update_final_states(my_input, currentID, final_groupings, trans_table)
+                next_node = first_node_of_group.get_map()[my_input][0]
+                groupings_id = DfaUtility.findPartitionOfNode(next_node, final_groupings)
+                trans_table[currentID].add_edge(my_input, trans_table[groupings_id])
 
-    def updateFinalStates(self, input, currentID, finalGroupings, transTable):
-        for oldSource in finalGroupings[currentID]:
+    def update_final_states(self, my_input, current_id, final_groupings, trans_table):
+        for oldSource in final_groupings[current_id]:
 
-            newSource = transTable[DfaUtility.findPartitionOfNode(oldSource, finalGroupings)]
-            toNodes = oldSource.get_map()[input]
-            for oldDestination in toNodes:
-                newDestination = transTable[DfaUtility.findPartitionOfNode(oldDestination, finalGroupings)]
-                key = str(newSource.get_current_id()) + Constants.SEPARATOR + input
-                type = oldDestination.get_node_types()
-                self.finalStates[key] = Pair(newDestination, type)
+            new_source = trans_table[DfaUtility.findPartitionOfNode(oldSource, final_groupings)]
+            to_nodes = oldSource.get_map()[my_input]
+            for oldDestination in to_nodes:
+                new_destination = trans_table[DfaUtility.findPartitionOfNode(oldDestination, final_groupings)]
+                key = str(new_source.get_current_id()) + Constants.SEPARATOR + my_input
+                typee = oldDestination.get_node_types()
+                self.finalStates[key] = Pair(new_destination, typee)
 
-    def constructGroupings(self, groupings, nodeParents):
-        newNodeParents = {}
-        newGroupings = {}
+    def construct_groupings(self, groupings, node_parents):
+        new_node_parents = {}
+        new_groupings = {}
 
         for oldGroupID in groupings.keys():
             for node in groupings[oldGroupID]:
-                groupMatch = False
-                for newGroupID in newGroupings.keys():
-                    newGroupingParent = newGroupings[newGroupID][0]
+                group_match = False
+                for newGroupID in new_groupings.keys():
+                    new_grouping_parent = new_groupings[newGroupID][0]
 
-                    groupMatch = DfaUtility.canFit(node, newGroupingParent, nodeParents)
-                    if groupMatch:
-                        newGroupings[newGroupID].append(node)
-                        newNodeParents[node.get_current_id()] = newGroupID
+                    group_match = DfaUtility.canFit(node, new_grouping_parent, node_parents)
+                    if group_match:
+                        new_groupings[newGroupID].append(node)
+                        new_node_parents[node.get_current_id()] = newGroupID
                         break
-                if not groupMatch:
-                    newPartition = []
-                    newPartition.append(node)
-                    newNodeParents[node.get_current_id()] = node.get_current_id()
-                    newGroupings[node.get_current_id()] = newPartition
+                if not group_match:
+                    new_partition = [node]
+                    new_node_parents[node.get_current_id()] = node.get_current_id()
+                    new_groupings[node.get_current_id()] = new_partition
 
-        nodeParents.update(newNodeParents)
-        return newGroupings
+        node_parents.update(new_node_parents)
+        return new_groupings
 
-    def getFinalStates(self):
+    def get_final_states(self):
         return self.finalStates
 
-    def getDFAMinimized(self):
+    def get_dfa_minimized(self):
         return self.DFAMinimized
 
-    def initNodeParents(self, partition, nodeParent):
+    def init_node_parents(self, partition, node_parent):
         for node in partition:
-            nodeParent[node.get_current_id()] = partition[0].get_current_id()
+            node_parent[node.get_current_id()] = partition[0].get_current_id()
