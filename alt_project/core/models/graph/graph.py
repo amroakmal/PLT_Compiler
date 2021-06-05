@@ -1,4 +1,5 @@
 from .node import Node
+from ...constants import Constants
 
 
 class Graph:
@@ -50,3 +51,27 @@ class Graph:
 
     def set_destination(self, destination):
         self.destination = destination
+
+    def toString(self):
+        out = ""
+        visited = [0] * Node.id
+        out += self.DFSPrintTree(self.initial_node, visited)
+        return out
+
+    def DFSPrintTree(self, node, visited):
+        if visited[node.get_current_id()]:
+            return ""
+
+        visited[node.get_current_id()] = True
+        out = str(node.get_current_id()) + "\n"
+
+        for k, v in node.get_map().items():
+            current = v
+            for value in current:
+                edge = k
+                if edge == Constants.EPSILON:
+                    edge = "eps"
+                out += str(node.get_current_id()) + " " + str(value.get_current_id()) + " " + edge + "\n"
+                out += self.DFSPrintTree(value, visited)
+
+        return out

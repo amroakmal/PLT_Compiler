@@ -6,7 +6,7 @@ if __name__ == '__main__':
     grammar = IOManager.read_file('grammar.txt')
     program = IOManager.read_file('program.txt')
 
-    if Lexer.construct_lexical_rules(grammar):
+    if Lexer.construct_lexical_rules(grammar, program):
         print("successful !")
     else:
         print("Failed !")

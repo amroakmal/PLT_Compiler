@@ -13,7 +13,9 @@ class KeywordNFA:
     def keyword_to_nfa(self, lexical_rules_store):
         for keyword in lexical_rules_store.get_keywords():
             keyword_characters = list(keyword)
+
             characters = NfaUtility.add_concat_symbol_to_words(keyword_characters)
+            #
             post_fix_expression = NfaUtility.infix_to_post_fix(characters)
             nfa = self.create_nfa(post_fix_expression)
             self.keyword_nfa[keyword] = nfa
@@ -28,6 +30,7 @@ class KeywordNFA:
             if currentExpression == Constants.CONCATENATE:
                 right = nfa.pop()
                 left = nfa.pop()
+                #
                 nfa.push(GraphUtility.concatenate(left, right))
             else:
                 nfa.push(Graph(currentExpression))
