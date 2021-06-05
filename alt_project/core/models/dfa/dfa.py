@@ -6,46 +6,43 @@ from core.utils.dfa_util import DfaUtility
 
 
 class DFAA:
-    def __init__(self, NFACombined):
+    def __init__(self, nfa_combined):
         self.dfa = Graph()
         self.DFAStatesUnmarked = Stack()
         self.DFATransTable = {}
 
-        s0 = []
-        s0.append(NFACombined.get_initial_node())
-        epsClosureS0 = self.epsilonClosure(s0)
-        self.DFAStatesUnmarked.push(epsClosureS0)
-        self.DFATransTable[DfaUtility.createUnionID(epsClosureS0)] = self.dfa.get_initial_node()
-        self.constructDFA(NFACombined)
+        s0 = [nfa_combined.get_initial_node()]
+        eps_closure_s0 = self.epsilon_closure(s0)
+        self.DFAStatesUnmarked.push(eps_closure_s0)
+        self.DFATransTable[DfaUtility.createUnionID(eps_closure_s0)] = self.dfa.get_initial_node()
+        self.construct_dfa(nfa_combined)
 
-    def constructDFA(self, NFACombined):
+    def construct_dfa(self, nfa_combined):
         while not self.DFAStatesUnmarked.is_empty():
-            T = self.DFAStatesUnmarked.pop()
-            TsID = DfaUtility.createUnionID(T)
+            t = self.DFAStatesUnmarked.pop()
+            ts_id = DfaUtility.createUnionID(t)
             U = []
-            for a in DfaUtility.getUnionInputs(T):
-                U = self.epsilonClosure(self.move(T, a))
-                newNodeTypes = DfaUtility.getNodeType(U)
-                newID = DfaUtility.createUnionID(U)
-                if newID not in self.DFATransTable.keys():
+            for a in DfaUtility.getUnionInputs(t):
+                U = self.epsilon_closure(self.move(t, a))
+                new_node_types = DfaUtility.getNodeType(U)
+                new_id = DfaUtility.createUnionID(U)
+                if new_id not in self.DFATransTable.keys():
                     self.DFAStatesUnmarked.push(U)
                     node = Node()
-                    node.set_node_types(newNodeTypes)
-                    self.DFATransTable[newID] = node
+                    node.set_node_types(new_node_types)
+                    self.DFATransTable[new_id] = node
 
-                    # TODO: test this line
-
-                    if NFACombined.get_destination() in U:
+                    if nfa_combined.get_destination() in U:
                         node.set_end(True)
 
-                temp = self.DFATransTable[TsID]
-                temp.add_edge(a, self.DFATransTable[newID])
+                temp = self.DFATransTable[ts_id]
+                temp.add_edge(a, self.DFATransTable[new_id])
 
-    def epsilonClosure(self, T):
+    def epsilon_closure(self, T):
         stack = Stack()
-        epsilonClosureOut = T
+        epsilon_closure_out = T
 
-        for node in epsilonClosureOut:
+        for node in epsilon_closure_out:
             stack.push(node)
 
         while not stack.is_empty():
@@ -55,11 +52,11 @@ class DFAA:
             for key in neighbours.keys():
                 if key == Constants.EPSILON:
                     for node in neighbours[key]:
-                        if node not in epsilonClosureOut:
-                            epsilonClosureOut.append(node)
+                        if node not in epsilon_closure_out:
+                            epsilon_closure_out.append(node)
                             stack.push(node)
 
-        return epsilonClosureOut
+        return epsilon_closure_out
 
     def move(self, t, a):
         res = []
@@ -71,8 +68,8 @@ class DFAA:
 
         return res
 
-    def getDFA(self):
+    def get_dfa(self):
         return self.dfa
 
-    def getDFATransTable(self):
+    def get_dfa_trans_table(self):
         return self.DFATransTable

@@ -16,24 +16,24 @@ class Lexer:
         rules_store = LexicalRulesStore(grammar)
 
         if rules_store.is_valid():
-            NFACombined = Lexer.getCombinedNFA(rules_store)
-            DFA = DFAA(NFACombined)
-            minimalDFA = DFAOptimizer(DFA)
-            tokenizer = ITokenizer(minimalDFA, rules_store.get_regular_expressions_keys())
-            lexemes = tokenizer.getTokens(program)
+            nfa_combined = Lexer.get_combined_nfa(rules_store)
+            dfa = DFAA(nfa_combined)
+            minimal_dfa = DFAOptimizer(dfa)
+            tokenizer = ITokenizer(minimal_dfa, rules_store.get_regular_expressions_keys())
+            lexemes = tokenizer.get_tokens(program)
 
-            return True
-        return False
+            return lexemes
+        return None
 
     @staticmethod
-    def getCombinedNFA(rules_cont):
+    def get_combined_nfa(rules_cont):
         regular_definition = RegularDefinitionNFA(rules_cont)
         keyword = KeywordNFA(rules_cont)
 
         punctuation = PunctuationNFA(rules_cont)
         regex = RegularExpressionNFA(rules_cont, regular_definition.get_definition_nfa())
 
-        NFACombined = NFA(regular_definition, keyword, punctuation, regex)
-        combinedNFAs = NFACombined.get_combined_graph()
+        nfa_combined = NFA(regular_definition, keyword, punctuation, regex)
+        combined_nfas = nfa_combined.get_combined_graph()
 
-        return combinedNFAs
+        return combined_nfas

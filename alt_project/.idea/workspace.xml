@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4e397112-6e52-4dbe-a0cd-5e30401ed38f" name="Default Changelist" comment="21 - May">
+    <list default="true" id="4e397112-6e52-4dbe-a0cd-5e30401ed38f" name="Default Changelist" comment="5 - June: finish and test phase 1">
+      <change afterPath="$PROJECT_DIR$/utils/fns.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/lexer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models/Tokenizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/ITokenizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models/graph/graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/graph/graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models/nfa/keyword_nfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/nfa/keyword_nfa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models/nfa/punctuation_nfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/nfa/punctuation_nfa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models/nfa/regular_definition_nfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/nfa/regular_definition_nfa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/models/nfa/regular_expression_nfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/nfa/regular_expression_nfa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/utils/nfa_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/utils/nfa_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grammar.txt" beforeDir="false" afterPath="$PROJECT_DIR$/grammar.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/ITokenizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/ITokenizer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/dfa/dfa.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/dfa/dfa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/models/dfa/dfa_optimizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models/dfa/dfa_optimizer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/program.txt" beforeDir="false" afterPath="$PROJECT_DIR$/program.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +105,7 @@
       <workItem from="1622831648433" duration="10528000" />
       <workItem from="1622879236298" duration="384000" />
       <workItem from="1622884657105" duration="2717000" />
-      <workItem from="1622894939850" duration="9731000" />
+      <workItem from="1622894939850" duration="11913000" />
     </task>
     <task id="LOCAL-00001" summary="7 May - 2">
       <created>1620412133461</created>
@@ -147,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621563104173</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="5 - June: finish and test phase 1">
+      <created>1622906862813</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1622906862814</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,9 +174,10 @@
     <MESSAGE value="8 May" />
     <MESSAGE value="8 May - 2" />
     <MESSAGE value="21 - May" />
-    <option name="LAST_COMMIT_MESSAGE" value="21 - May" />
+    <MESSAGE value="5 - June: finish and test phase 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="5 - June: finish and test phase 1" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/alt_project$main.coverage" NAME="main Coverage Results" MODIFIED="1622906335095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/alt_project$main.coverage" NAME="main Coverage Results" MODIFIED="1622908612545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

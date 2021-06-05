@@ -13,131 +13,131 @@ class ITokenizer:
         if isinstance(inp1, str):
             data = IOManager.read_file(inp1)
             tokens = data.split(os.linesep)
-            self.savedLexems = []
+            self.saved_lexemes = []
             for token in tokens:
-                self.savedLexems.append(Pair("", token))
+                self.saved_lexemes.append(Pair("", token))
             self.validTokenization = True
 
         else:
-            self.minimalDFA = inp1.getDFAMinimized()
-            self.transitionTable = inp1.getFinalStates()
+            self.minimalDFA = inp1.get_dfa_minimized()
+            self.transitionTable = inp1.get_final_states()
             self.regularExpressions = inp2
             self.validTokenization = True
 
-    def getTokens(self, inp):
+    def get_tokens(self, inp):
         start = self.minimalDFA.get_initial_node()
         idx = 0
-        self.savedLexems = []
+        self.saved_lexemes = []
         self.validTokenization = True
         first = True
 
         while idx < len(inp) or first is True:
             first = False
-            retvalue = self.addGenerations(inp, idx, idx, self.savedLexems, start)
-            if retvalue == -1:
-                idx = self.getUknownSymbol(inp, idx, self.savedLexems)
+            revalue = self.add_generations(inp, idx, idx, self.saved_lexemes, start)
+            if revalue == -1:
+                idx = self.get_uknown_symbol(inp, idx, self.saved_lexemes)
                 self.validTokenization = False
 
-            elif retvalue == -2:
+            elif revalue == -2:
                 idx += 1
-                self.savedLexems.append(Pair("", ""))
+                self.saved_lexemes.append(Pair("", ""))
 
             else:
-                idx = retvalue + 1
+                idx = revalue + 1
 
-        self.sanitizeLexems(self.savedLexems)
-        return self.savedLexems
+        self.sanitize_lexems(self.saved_lexemes)
+        return self.saved_lexemes
 
-    def addGenerations(self, inp, startIdx, idx, lexems, currNode):
+    def add_generations(self, inp, start_idx, idx, lexemes, curr_node):
         if idx >= len(inp):
             return -2
-        currentChar = inp[idx]
-        if currentChar == ' ' or currentChar == '\n' or currentChar == '\r' or currentChar == '\t':
+        current_char = inp[idx]
+        if current_char == ' ' or current_char == '\n' or current_char == '\r' or current_char == '\t':
             return -2
-        transition = str(currNode.get_current_id()) + " " + inp[idx]
-        nextTransition = self.transitionTable.get(transition)
+        transition = str(curr_node.get_current_id()) + " " + inp[idx]
+        next_transition = self.transitionTable.get(transition)
 
-        if nextTransition is not None:
-            acceptanceStates = nextTransition.second.split(" ")
-            acceptance = self.getAcceptanceState(acceptanceStates, inp[startIdx:idx + 1])
-            retValue = self.addGenerations(inp, startIdx, idx + 1, lexems, nextTransition.first)
-            if retValue == -1 or retValue == -2:
+        if next_transition is not None:
+            acceptance_states = next_transition.second.split(" ")
+            acceptance = self.get_acceptance_state(acceptance_states, inp[start_idx:idx + 1])
+            ret_value = self.add_generations(inp, start_idx, idx + 1, lexemes, next_transition.first)
+            if ret_value == -1 or ret_value == -2:
                 if acceptance == "":
                     return -1
-                lexems.append(Pair(inp[startIdx:idx + 1], acceptance))
+                lexemes.append(Pair(inp[start_idx:idx + 1], acceptance))
                 return idx
             else:
-                return retValue
+                return ret_value
         return -1
 
-    def getAcceptanceState(self, acceptanceStates, inp):
-        if len(acceptanceStates) == 1:
-            return acceptanceStates[0]
-        for s in acceptanceStates:
+    def get_acceptance_state(self, acceptance_states, inp):
+        if len(acceptance_states) == 1:
+            return acceptance_states[0]
+        for s in acceptance_states:
             if inp == s:
                 return inp
         for reg in self.regularExpressions:
-            for s in acceptanceStates:
+            for s in acceptance_states:
                 if reg == s:
                     return reg
         return inp
 
     # returns index to the start of the new valid inputs
-    def getUknownSymbol(self, inp, startIdx, lexems):
-        appendedMatches = self.removeIncorrectMatches(lexems)
-        idx = startIdx
-        startNode = self.minimalDFA.get_initial_node()
+    def get_uknown_symbol(self, inp, start_idx, lexems):
+        appended_matches = self.remove_incorrect_matches(lexems)
+        idx = start_idx
+        start_node = self.minimalDFA.get_initial_node()
         first = True
-        retvalue = 0
+        revalue = 0
 
-        while retvalue != -2 or first is True:
+        while revalue != -2 or first is True:
             first = False
-            retvalue = self.addGenerations(inp, idx, idx, lexems, startNode)
-            if retvalue == -1:
-                appendedMatches += inp[idx]
+            revalue = self.add_generations(inp, idx, idx, lexems, start_node)
+            if revalue == -1:
+                appended_matches += inp[idx]
                 idx += 1
 
-            elif retvalue != -2:
-                if self.isRegex(lexems[len(lexems) - 1].second):
-                    appendedMatches += lexems[len(lexems) - 1].first
-                    idx = retvalue + 1
+            elif revalue != -2:
+                if self.is_regex(lexems[len(lexems) - 1].second):
+                    appended_matches += lexems[len(lexems) - 1].first
+                    idx = revalue + 1
                 else:  # keyword or operator found so just pop it and break [ works like a separator ]
                     lexems.pop(len(lexems) - 1)
                     break
-        self.removeIncorrectMatches(lexems)
-        lexems.append(Pair(appendedMatches, self.SYMBOL_ERROR))
+        self.remove_incorrect_matches(lexems)
+        lexems.append(Pair(appended_matches, self.SYMBOL_ERROR))
         return idx
 
-    def removeIncorrectMatches(self, lexems):
-        appendedMatches = ""
-        while len(lexems) > 0:
-            lastMatch = lexems[len(lexems) - 1]
-            if not self.isRegex(lastMatch.second):
+    def remove_incorrect_matches(self, lexemes):
+        appended_matches = ""
+        while len(lexemes) > 0:
+            last_match = lexemes[len(lexemes) - 1]
+            if not self.is_regex(last_match.second):
                 break
-            appendedMatches += lastMatch.first
-            lexems.pop(len(lexems) - 1)
-        return appendedMatches
+            appended_matches += last_match.first
+            lexemes.pop(len(lexemes) - 1)
+        return appended_matches
 
-    def isRegex(self, match):
+    def is_regex(self, match):
         for reg in self.regularExpressions:
             if reg == match:
                 return True
 
-    def sanitizeLexems(self, lexems):
+    def sanitize_lexems(self, lexemes):
         idx = 0
-        size = len(lexems)
+        size = len(lexemes)
         while idx < size:
-            if lexems[idx][0] == "":
-                lexems.pop(idx)
+            if lexemes[idx][0] == "":
+                lexemes.pop(idx)
                 size -= 1
             else:
                 idx += 1
 
-    def getSavedLexems(self):
-        return self.savedLexems
+    def get_saved_lexems(self):
+        return self.saved_lexemes
 
-    def getTransitionTable(self):
+    def get_transition_table(self):
         return self.transitionTable
 
-    def isValidTokenization(self):
+    def is_valid_tokenization(self):
         return self.validTokenization
