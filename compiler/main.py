@@ -8,12 +8,18 @@ if __name__ == '__main__':
     grammar = IOManager.read_file('grammar.txt')
     program = IOManager.read_file('program.txt')
 
+    import os
+    if os.path.exists("output.txt"):
+        os.remove("output.txt")
+
     result1 = Lexer.construct_lexical_rules(grammar, program)
 
-    Parsers.parser_start()
-
+    file_out = open("output.txt", 'a')
     if result1 is not None:
-        print("successful !")
-        print(get_next_token(result1))
+        file_out.write("successful !\n")
+        file_out.close()
+        P = Parsers(result1)
+        P.parser_start()
     else:
-        print("Failed !")
+        file_out.write("Failed !\n")
+        file_out.close()

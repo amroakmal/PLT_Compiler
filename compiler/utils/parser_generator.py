@@ -11,6 +11,7 @@ class ParserGenerator:
         self.follow = []
         self.mod_production = []
         self.pred_table = []
+        self.ambiguous = False
 
     def read_file(self):
         f = open(self.file_path, "r")
@@ -77,7 +78,7 @@ class ParserGenerator:
         for x in range(len(self.non_terminals)):
             self.follow.append(set())
 
-        self.follow[0].add('$')
+        self.follow[0].add('\'$\'')
 
         while True:
             follow_pre = copy.deepcopy(self.follow)
@@ -142,47 +143,67 @@ class ParserGenerator:
             while True:
                 if list_cand[c] == '\L':
                     for fo in self.follow[self.non_terminals.index(left)]:
+                        if self.pred_table[self.non_terminals.index(left)][self.terminals.index(fo)] != -1:
+                            self.ambiguous = True
                         self.pred_table[self.non_terminals.index(left)][self.terminals.index(fo)] = i
                     break
                 elif list_cand[c] not in self.non_terminals:
+                    if self.pred_table[self.non_terminals.index(left)][self.terminals.index(list_cand[c])] != -1:
+                        self.ambiguous = True
                     self.pred_table[self.non_terminals.index(left)][self.terminals.index(list_cand[c])] = i
                     break
                 else:
                     for f in self.first[self.non_terminals.index(list_cand[c])]:
                         if f != '\L':
+                            if self.pred_table[self.non_terminals.index(left)][self.terminals.index(f)] != -1:
+                                self.ambiguous = True
                             self.pred_table[self.non_terminals.index(left)][self.terminals.index(f)] = i
                     if '\L' not in self.first[self.non_terminals.index(list_cand[c])]:
                         break
                     if c == len(list_cand) - 1:
                         for fo in self.follow[self.non_terminals.index(left)]:
+                            if self.pred_table[self.non_terminals.index(left)][self.terminals.index(fo)] != -1:
+                                self.ambiguous = True
                             self.pred_table[self.non_terminals.index(left)][self.terminals.index(fo)] = i
                         break
                     c += 1
 
+        # adding synchronization symbol as -2
+        for x in range(len(self.non_terminals)):
+            for fo in self.follow[x]:
+                if self.pred_table[x][self.terminals.index(fo)] == -1:
+                    self.pred_table[x][self.terminals.index(fo)] = -2
+
     def print_first_follow(self):
-        print("-> First Sets")
+        file_out = open("output.txt", 'a')
+        file_out.write("\n-> First Sets\n")
         for x in range(len(self.non_terminals)):
-            print(self.non_terminals[x], " --> ", self.first[x])
-        print()
-        print("-> Follow Sets")
+            file_out.write("{:<22} --> {}\n".format(self.non_terminals[x], self.first[x]))
+        file_out.write("\n-> Follow Sets\n")
         for x in range(len(self.non_terminals)):
-            print(self.non_terminals[x], " --> ", self.follow[x])
+            file_out.write("{:<22} --> {}\n".format(self.non_terminals[x], self.follow[x]))
+        file_out.close()
 
     def print_table(self):
-        print()
-        print("-> Productions")
+        file_out = open("output.txt", 'a')
+        if self.ambiguous:
+            file_out.write("\n####### The Grammar is ambiguous #######\n")
+        else:
+            file_out.write("\n####### The Grammar is NOT ambiguous #######\n")
+        file_out.write("\n-> Productions\n")
         for x in range(len(self.mod_production)):
-            print(x, " - ", self.mod_production[x])
-        print('\n', "{:<23}".format(""), end="", flush=True)
+            file_out.write("{} - {}\n".format(x,self.mod_production[x]))
+        file_out.write("\n {:<23}".format(""))
         for i in self.terminals:
-            print("{:<10}".format(str(i)), end="", flush=True)
-        print()
+            file_out.write("{:<10}".format(str(i)))
+        file_out.write("\n")
 
         for x in range(len(self.non_terminals)):
-            print("{:<22} {:<2}".format(self.non_terminals[x], '|'), end="", flush=True)
+            file_out.write("{:<22} {:<2}".format(self.non_terminals[x], '|'))
             for i in self.pred_table[x]:
-                print("{:<10}".format(str(i)), end="", flush=True)
-            print()
+                file_out.write("{:<10}".format(str(i)))
+            file_out.write("\n")
+        file_out.close()
 
     def generate(self):
         self.read_file()
@@ -198,3 +219,11 @@ class ParserGenerator:
     def get_predict_table(self):
         return self.pred_table
 
+    def get_non_terminal(self):
+        return self.non_terminals
+
+    def get_terminal(self):
+        return self.terminals
+
+    def get_mod_production(self):
+        return self.mod_production

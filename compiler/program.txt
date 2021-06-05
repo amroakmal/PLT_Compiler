@@ -1,16 +1,10 @@
-program example ;
-var  sum , count  : integer ;
-	begin
-		pass ++ ;
-		pass -- ;
-		while pass <> 10  do
-		begin
-		pass := pass + 1 ;
-read (mnt) ;
-if mnt <= 0 then
-count := count + 1.234
+int x;
+X = 50;
+if(x >2)
+{
+X = 0;
+}
 else
-sum := sum + mnt
-end ;
-write (sum , count)
-end.
+{
+x = 30
+}
