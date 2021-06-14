@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "5Ai2FIy3DdSBMcBseMLWS1DxFStDOYAAl7iuT9Ly9HcFzQ+1DdoVThFul481dwzVijT9dRrhi2DlcHlBMGYjfg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\noure\\source\\repos\\PLT\\PLT\\PLT.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\noure\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.14\\microsoft.netcore.app.host.win-x64.3.1.14.nupkg.sha512"
+  ],
+  "logs": []
+}
