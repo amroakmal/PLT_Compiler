@@ -6,7 +6,7 @@ from utils.io_manager import IOManager
 
 if __name__ == '__main__':
     grammar = IOManager.read_file('grammar.txt')
-    program = IOManager.read_file('program.txt')
+    program = IOManager.read_file('program.txt').lower()
 
     import os
     if os.path.exists("output.txt"):

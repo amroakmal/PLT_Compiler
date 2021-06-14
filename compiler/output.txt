@@ -10,41 +10,41 @@ relop: \=\= | !\= | > | >\= | < | <\= ---> exp
 addop:\+ | - ---> exp
 mulop:\* | / ---> exp
 ////////// First Sets
-METHOD_BODY            ---> {"'float'", "'int'", "'id'", "'while'", "'if'"}
-STATEMENT_LIST         ---> {"'float'", "'int'", "'id'", "'while'", "'if'"}
-STATEMENT_LIST_dash    ---> {"'float'", "'int'", "'id'", '\\L', "'while'", "'if'"}
-STATEMENT              ---> {"'float'", "'int'", "'id'", "'while'", "'if'"}
+METHOD_BODY            ---> {"'id'", "'if'", "'int'", "'float'", "'while'"}
+STATEMENT_LIST         ---> {"'id'", "'if'", "'int'", "'float'", "'while'"}
+STATEMENT_LIST_dash    ---> {'\\L', "'id'", "'if'", "'int'", "'float'", "'while'"}
+STATEMENT              ---> {"'id'", "'if'", "'int'", "'float'", "'while'"}
 DECLARATION            ---> {"'float'", "'int'"}
 PRIMITIVE_TYPE         ---> {"'float'", "'int'"}
 IF                     ---> {"'if'"}
 WHILE                  ---> {"'while'"}
 ASSIGNMENT             ---> {"'id'"}
-EXPRESSION             ---> {"'+'", "'num'", "'id'", "'('", "'-'"}
+EXPRESSION             ---> {"'-'", "'id'", "'+'", "'num'", "'('"}
 EXPRESSION_dash        ---> {'\\L', "'relop'"}
-SIMPLE_EXPRESSION      ---> {"'+'", "'num'", "'id'", "'('", "'-'"}
+SIMPLE_EXPRESSION      ---> {"'-'", "'id'", "'+'", "'num'", "'('"}
 SIMPLE_EXPRESSION_dash ---> {'\\L', "'addop'"}
-TERM                   ---> {"'('", "'num'", "'id'"}
-TERM_dash              ---> {'\\L', "'mulop'"}
-FACTOR                 ---> {"'('", "'num'", "'id'"}
-SIGN                   ---> {"'+'", "'-'"}
+TERM                   ---> {"'num'", "'('", "'id'"}
+TERM_dash              ---> {"'mulop'", '\\L'}
+FACTOR                 ---> {"'num'", "'('", "'id'"}
+SIGN                   ---> {"'-'", "'+'"}
 ////////// Follow Sets
 METHOD_BODY            ---> {"'$'"}
 STATEMENT_LIST         ---> {"'$'"}
 STATEMENT_LIST_dash    ---> {"'$'"}
-STATEMENT              ---> {"'float'", "'int'", "'$'", "'id'", "'while'", "'}'", "'if'"}
-DECLARATION            ---> {"'float'", "'int'", "'$'", "'id'", "'while'", "'}'", "'if'"}
+STATEMENT              ---> {"'id'", "'if'", "'int'", "'float'", "'$'", "'}'", "'while'"}
+DECLARATION            ---> {"'id'", "'if'", "'int'", "'float'", "'$'", "'}'", "'while'"}
 PRIMITIVE_TYPE         ---> {"'id'"}
-IF                     ---> {"'float'", "'int'", "'$'", "'id'", "'while'", "'}'", "'if'"}
-WHILE                  ---> {"'float'", "'int'", "'$'", "'id'", "'while'", "'}'", "'if'"}
-ASSIGNMENT             ---> {"'float'", "'int'", "'$'", "'id'", "'while'", "'}'", "'if'"}
-EXPRESSION             ---> {"';'", "')'"}
-EXPRESSION_dash        ---> {"';'", "')'"}
-SIMPLE_EXPRESSION      ---> {"'relop'", "';'", "')'"}
-SIMPLE_EXPRESSION_dash ---> {"'relop'", "';'", "')'"}
-TERM                   ---> {"'relop'", "';'", "')'", "'addop'"}
-TERM_dash              ---> {"'relop'", "';'", "')'", "'addop'"}
-FACTOR                 ---> {"')'", "'mulop'", "';'", "'relop'", "'addop'"}
-SIGN                   ---> {"'('", "'num'", "'id'"}
+IF                     ---> {"'id'", "'if'", "'int'", "'float'", "'$'", "'}'", "'while'"}
+WHILE                  ---> {"'id'", "'if'", "'int'", "'float'", "'$'", "'}'", "'while'"}
+ASSIGNMENT             ---> {"'id'", "'if'", "'int'", "'float'", "'$'", "'}'", "'while'"}
+EXPRESSION             ---> {"')'", "';'"}
+EXPRESSION_dash        ---> {"')'", "';'"}
+SIMPLE_EXPRESSION      ---> {"')'", "'relop'", "';'"}
+SIMPLE_EXPRESSION_dash ---> {"')'", "'relop'", "';'"}
+TERM                   ---> {"')'", "'relop'", "'addop'", "';'"}
+TERM_dash              ---> {"')'", "'relop'", "'addop'", "';'"}
+FACTOR                 ---> {"'relop'", "'mulop'", "'addop'", "')'", "';'"}
+SIGN                   ---> {"'num'", "'('", "'id'"}
 ////////// The Grammar is NOT ambiguous
 ////////// Productions
 0 ---> METHOD_BODY = STATEMENT_LIST
@@ -77,24 +77,24 @@ SIGN                   ---> {"'('", "'num'", "'id'"}
 27 ---> SIGN = '+'
 28 ---> SIGN = '-'
 ////////// Predict Table
-Non Terminals         |'float'   |')'       |'int'     |'$'       |'+'       |'num'     |'id'      |'while'   |';'       |'mulop'   |'}'       |'if'      |'relop'   |'('       |'addop'   |'-'       
-METHOD_BODY           |0         |-1        |0         |-2        |-1        |-1        |0         |0         |-1        |-1        |-1        |0         |-1        |-1        |-1        |-1        
-STATEMENT_LIST        |1         |-1        |1         |-2        |-1        |-1        |1         |1         |-1        |-1        |-1        |1         |-1        |-1        |-1        |-1        
-STATEMENT_LIST_dash   |2         |-1        |2         |3         |-1        |-1        |2         |2         |-1        |-1        |-1        |2         |-1        |-1        |-1        |-1        
-STATEMENT             |4         |-1        |4         |-2        |-1        |-1        |7         |6         |-1        |-1        |-2        |5         |-1        |-1        |-1        |-1        
-DECLARATION           |8         |-1        |8         |-2        |-1        |-1        |-2        |-2        |-1        |-1        |-2        |-2        |-1        |-1        |-1        |-1        
-PRIMITIVE_TYPE        |10        |-1        |9         |-1        |-1        |-1        |-2        |-1        |-1        |-1        |-1        |-1        |-1        |-1        |-1        |-1        
-IF                    |-2        |-1        |-2        |-2        |-1        |-1        |-2        |-2        |-1        |-1        |-2        |11        |-1        |-1        |-1        |-1        
-WHILE                 |-2        |-1        |-2        |-2        |-1        |-1        |-2        |12        |-1        |-1        |-2        |-2        |-1        |-1        |-1        |-1        
-ASSIGNMENT            |-2        |-1        |-2        |-2        |-1        |-1        |13        |-2        |-1        |-1        |-2        |-2        |-1        |-1        |-1        |-1        
-EXPRESSION            |-1        |-2        |-1        |-1        |14        |14        |14        |-1        |-2        |-1        |-1        |-1        |-1        |14        |-1        |14        
-EXPRESSION_dash       |-1        |16        |-1        |-1        |-1        |-1        |-1        |-1        |16        |-1        |-1        |-1        |15        |-1        |-1        |-1        
-SIMPLE_EXPRESSION     |-1        |-2        |-1        |-1        |18        |17        |17        |-1        |-2        |-1        |-1        |-1        |-2        |17        |-1        |18        
-SIMPLE_EXPRESSION_dash|-1        |20        |-1        |-1        |-1        |-1        |-1        |-1        |20        |-1        |-1        |-1        |20        |-1        |19        |-1        
-TERM                  |-1        |-2        |-1        |-1        |-1        |21        |21        |-1        |-2        |-1        |-1        |-1        |-2        |21        |-2        |-1        
-TERM_dash             |-1        |23        |-1        |-1        |-1        |-1        |-1        |-1        |23        |22        |-1        |-1        |23        |-1        |23        |-1        
-FACTOR                |-1        |-2        |-1        |-1        |-1        |25        |24        |-1        |-2        |-2        |-1        |-1        |-2        |26        |-2        |-1        
-SIGN                  |-1        |-1        |-1        |-1        |27        |-2        |-2        |-1        |-1        |-1        |-1        |-1        |-1        |-2        |-1        |28        
+Non Terminals         |'-'       |'relop'   |'id'      |'mulop'   |'num'     |'if'      |'int'     |'+'       |'addop'   |')'       |'float'   |'$'       |'}'       |'('       |';'       |'while'   
+METHOD_BODY           |-1        |-1        |0         |-1        |-1        |0         |0         |-1        |-1        |-1        |0         |-2        |-1        |-1        |-1        |0         
+STATEMENT_LIST        |-1        |-1        |1         |-1        |-1        |1         |1         |-1        |-1        |-1        |1         |-2        |-1        |-1        |-1        |1         
+STATEMENT_LIST_dash   |-1        |-1        |2         |-1        |-1        |2         |2         |-1        |-1        |-1        |2         |3         |-1        |-1        |-1        |2         
+STATEMENT             |-1        |-1        |7         |-1        |-1        |5         |4         |-1        |-1        |-1        |4         |-2        |-2        |-1        |-1        |6         
+DECLARATION           |-1        |-1        |-2        |-1        |-1        |-2        |8         |-1        |-1        |-1        |8         |-2        |-2        |-1        |-1        |-2        
+PRIMITIVE_TYPE        |-1        |-1        |-2        |-1        |-1        |-1        |9         |-1        |-1        |-1        |10        |-1        |-1        |-1        |-1        |-1        
+IF                    |-1        |-1        |-2        |-1        |-1        |11        |-2        |-1        |-1        |-1        |-2        |-2        |-2        |-1        |-1        |-2        
+WHILE                 |-1        |-1        |-2        |-1        |-1        |-2        |-2        |-1        |-1        |-1        |-2        |-2        |-2        |-1        |-1        |12        
+ASSIGNMENT            |-1        |-1        |13        |-1        |-1        |-2        |-2        |-1        |-1        |-1        |-2        |-2        |-2        |-1        |-1        |-2        
+EXPRESSION            |14        |-1        |14        |-1        |14        |-1        |-1        |14        |-1        |-2        |-1        |-1        |-1        |14        |-2        |-1        
+EXPRESSION_dash       |-1        |15        |-1        |-1        |-1        |-1        |-1        |-1        |-1        |16        |-1        |-1        |-1        |-1        |16        |-1        
+SIMPLE_EXPRESSION     |18        |-2        |17        |-1        |17        |-1        |-1        |18        |-1        |-2        |-1        |-1        |-1        |17        |-2        |-1        
+SIMPLE_EXPRESSION_dash|-1        |20        |-1        |-1        |-1        |-1        |-1        |-1        |19        |20        |-1        |-1        |-1        |-1        |20        |-1        
+TERM                  |-1        |-2        |21        |-1        |21        |-1        |-1        |-1        |-2        |-2        |-1        |-1        |-1        |21        |-2        |-1        
+TERM_dash             |-1        |23        |-1        |22        |-1        |-1        |-1        |-1        |23        |23        |-1        |-1        |-1        |-1        |23        |-1        
+FACTOR                |-1        |-2        |24        |-2        |25        |-1        |-1        |-1        |-2        |-2        |-1        |-1        |-1        |26        |-2        |-1        
+SIGN                  |28        |-1        |-2        |-1        |-2        |-1        |-1        |27        |-1        |-1        |-1        |-1        |-1        |-2        |-1        |-1        
 ////////// Parsing
 Stack                      | Input                | Output              
 $METHOD_BODY               | int                  | METHOD_BODY = STATEMENT_LIST
@@ -176,13 +176,16 @@ $SIMPLE_EXPRESSION         | num                  | SIMPLE_EXPRESSION = TERM SIM
 $TERM                      | num                  | TERM = FACTOR TERM_dash
 $FACTOR                    | num                  | FACTOR = 'num'      
 $'num'                     | num                  | 
-$TERM_dash                 | }                    | Error: input $ is incorrect
-$SIMPLE_EXPRESSION_dash    | }                    | Error: input $ is incorrect
-$EXPRESSION_dash           | }                    | Error: input $ is incorrect
-$';'                       | }                    | Error: unmatched terminal is inserted ';' and $
+$TERM_dash                 | ;                    | TERM_dash = \L      
+$\L                        | ;                    | 
+$SIMPLE_EXPRESSION_dash    | ;                    | SIMPLE_EXPRESSION_dash = \L
+$\L                        | ;                    | 
+$EXPRESSION_dash           | ;                    | EXPRESSION_dash = \L
+$\L                        | ;                    | 
+$';'                       | ;                    | 
 $'}'                       | }                    | 
 $STATEMENT_LIST_dash       | $                    | STATEMENT_LIST_dash = \L
-$\L                        | $                    | Accepted
+$\L                        | $                    |     -> Accepted
 ////////// leftmost derivation sententials
 ['METHOD_BODY']
 ['STATEMENT_LIST']
@@ -230,6 +233,9 @@ $\L                        | $                    | Accepted
 ["'int'", "'id'", "';'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'if'", "'('", "'id'", '\\L', '\\L', "'relop'", "'num'", '\\L', '\\L', "')'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", "'else'", "'{'", "'id'", "'='", 'TERM', 'SIMPLE_EXPRESSION_dash', 'EXPRESSION_dash', "';'", "'}'", 'STATEMENT_LIST_dash']
 ["'int'", "'id'", "';'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'if'", "'('", "'id'", '\\L', '\\L', "'relop'", "'num'", '\\L', '\\L', "')'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", "'else'", "'{'", "'id'", "'='", 'FACTOR', 'TERM_dash', 'SIMPLE_EXPRESSION_dash', 'EXPRESSION_dash', "';'", "'}'", 'STATEMENT_LIST_dash']
 ["'int'", "'id'", "';'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'if'", "'('", "'id'", '\\L', '\\L', "'relop'", "'num'", '\\L', '\\L', "')'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", "'else'", "'{'", "'id'", "'='", "'num'", 'TERM_dash', 'SIMPLE_EXPRESSION_dash', 'EXPRESSION_dash', "';'", "'}'", 'STATEMENT_LIST_dash']
-["'int'", "'id'", "';'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'if'", "'('", "'id'", '\\L', '\\L', "'relop'", "'num'", '\\L', '\\L', "')'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", "'else'", "'{'", "'id'", "'='", "'num'", "';'", "'}'", '\\L']
+["'int'", "'id'", "';'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'if'", "'('", "'id'", '\\L', '\\L', "'relop'", "'num'", '\\L', '\\L', "')'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", "'else'", "'{'", "'id'", "'='", "'num'", '\\L', 'SIMPLE_EXPRESSION_dash', 'EXPRESSION_dash', "';'", "'}'", 'STATEMENT_LIST_dash']
+["'int'", "'id'", "';'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'if'", "'('", "'id'", '\\L', '\\L', "'relop'", "'num'", '\\L', '\\L', "')'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", "'else'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', 'EXPRESSION_dash', "';'", "'}'", 'STATEMENT_LIST_dash']
+["'int'", "'id'", "';'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'if'", "'('", "'id'", '\\L', '\\L', "'relop'", "'num'", '\\L', '\\L', "')'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", "'else'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", 'STATEMENT_LIST_dash']
+["'int'", "'id'", "';'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'if'", "'('", "'id'", '\\L', '\\L', "'relop'", "'num'", '\\L', '\\L', "')'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", "'else'", "'{'", "'id'", "'='", "'num'", '\\L', '\\L', '\\L', "';'", "'}'", '\\L']
 Last raw after removing the epsilon '\L'
 ["'int'", "'id'", "';'", "'id'", "'='", "'num'", "';'", "'if'", "'('", "'id'", "'relop'", "'num'", "')'", "'{'", "'id'", "'='", "'num'", "';'", "'}'", "'else'", "'{'", "'id'", "'='", "'num'", "';'", "'}'"]
