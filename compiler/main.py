@@ -14,12 +14,16 @@ if __name__ == '__main__':
 
     result1 = Lexer.construct_lexical_rules(grammar, program)
 
-    file_out = open("output.txt", 'a')
+    # ------------------------------------------------------------
+    file_out = open("tokens.txt", 'a')
+    for pair in result1:
+        file_out.write(pair.first + " ---> " + pair.second + '\n')
+    file_out.close()
+    # ------------------------------------------------------------
+
     if result1 is not None:
-        file_out.write("successful !\n")
-        file_out.close()
+        print("Lexer successful !\n")
         P = Parsers(result1)
         P.parser_start()
     else:
-        file_out.write("Failed !\n")
-        file_out.close()
+        print("Lexer Failed !\n")

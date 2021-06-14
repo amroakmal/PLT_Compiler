@@ -1,6 +1,6 @@
 import copy
 
-from compiler.core.models.stack import Stack
+from core.models.stack import Stack
 from utils.parser_generator import ParserGenerator
 from utils.fns import get_next_token
 
@@ -19,8 +19,8 @@ class Parsers:
         productions = parser.get_mod_production()
         parser.print_first_follow()
         parser.print_table()
-
-        file_out.write("\n{:<20}  | {:<20} | {:<20}\n".format("Stack", "Input", "Output"))
+        file_out.write("////////// Parsing\n")
+        file_out.write("{:<25}  | {:<20} | {:<20}".format("Stack", "Input", "Output"))
         s = Stack()
         left_der = []
         left_row = []
@@ -31,7 +31,7 @@ class Parsers:
         left_row = copy.deepcopy(left_row)
         inp = get_next_token(self.lexer).second
         while not s.is_empty():
-            file_out.write("\n${:<20} | {:<20} | ".format(s.peek(), inp))
+            file_out.write("\n${:<25} | {:<20} | ".format(s.peek(), inp))
             if s.peek() not in non_terminals:
                 if s.peek() == '\'' + inp + '\'':
                     s.pop()
@@ -42,7 +42,9 @@ class Parsers:
                         s.pop()
                         l_count += 1
                     else:
-                        file_out.write("Error: unmatched terminal is inserted {} and {}".format(s.peek(), get_next_token(self.lexer).first))
+                        file_out.write("Error: unmatched terminal is inserted {} and {}".format(s.peek(),
+                                                                                                get_next_token(
+                                                                                                    self.lexer).first))
                         s.pop()
                         l_count += 1
             else:
@@ -79,11 +81,10 @@ class Parsers:
         else:
             file_out.write('Rejected\n')
 
-        file_out.write("\n--> leftmost derivation sententials\n")
+        file_out.write("////////// leftmost derivation sententials\n")
         for x in left_der:
             file_out.write(str(x))
             file_out.write("\n")
-        file_out.write("\n--> Last raw after removing \'\\L\'\n")
+        file_out.write("Last raw after removing the epsilon \'\\L\'\n")
         file_out.write(str(list(filter(('\L').__ne__, left_row))))
         file_out.close()
-

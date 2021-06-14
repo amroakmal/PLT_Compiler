@@ -29,19 +29,19 @@ class LexicalLineProcessor:
             if match is not None:
                 if idx == 0:
                     line_rules = RegularDefinition(match.group(1), match.group(2))
-                    file_out.write('line:: ' + line + '  ---> type: def\n')
+                    file_out.write(line + ' ---> def\n')
                     break
                 if idx == 1:
                     line_rules = RegularExpression(match.group(1), match.group(2))
-                    file_out.write('line:: ' + line + '  ---> type: exp\n')
+                    file_out.write(line + ' ---> exp\n')
                     break
                 if idx == 2:
                     line_rules = Keywords(match.group(1))
-                    file_out.write('line:: ' + line + '  ---> type: key\n')
+                    file_out.write(line + ' ---> key\n')
                     break
                 if idx == 3:
                     line_rules = Operators(match.group(1))
-                    file_out.write('line:: ' + line + '  ---> type: op\n')
+                    file_out.write(line + ' ---> op\n')
                     break
 
         file_out.close()

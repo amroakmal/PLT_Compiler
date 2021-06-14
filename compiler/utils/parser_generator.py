@@ -176,32 +176,33 @@ class ParserGenerator:
 
     def print_first_follow(self):
         file_out = open("output.txt", 'a')
-        file_out.write("\n-> First Sets\n")
+        file_out.write("////////// First Sets\n")
         for x in range(len(self.non_terminals)):
-            file_out.write("{:<22} --> {}\n".format(self.non_terminals[x], self.first[x]))
-        file_out.write("\n-> Follow Sets\n")
+            file_out.write("{:<22} ---> {}\n".format(self.non_terminals[x], self.first[x]))
+        file_out.write("////////// Follow Sets\n")
         for x in range(len(self.non_terminals)):
-            file_out.write("{:<22} --> {}\n".format(self.non_terminals[x], self.follow[x]))
+            file_out.write("{:<22} ---> {}\n".format(self.non_terminals[x], self.follow[x]))
         file_out.close()
 
     def print_table(self):
         file_out = open("output.txt", 'a')
         if self.ambiguous:
-            file_out.write("\n####### The Grammar is ambiguous #######\n")
+            file_out.write("////////// The Grammar is ambiguous\n")
         else:
-            file_out.write("\n####### The Grammar is NOT ambiguous #######\n")
-        file_out.write("\n-> Productions\n")
+            file_out.write("////////// The Grammar is NOT ambiguous\n")
+        file_out.write("////////// Productions\n")
         for x in range(len(self.mod_production)):
-            file_out.write("{} - {}\n".format(x,self.mod_production[x]))
-        file_out.write("\n {:<23}".format(""))
+            file_out.write("{} ---> {}\n".format(x,self.mod_production[x]))
+        file_out.write("////////// Predict Table\n")
+        file_out.write("{:<22}".format("Non Terminals"))
         for i in self.terminals:
-            file_out.write("{:<10}".format(str(i)))
+            file_out.write("|{:<10}".format(str(i)))
         file_out.write("\n")
 
         for x in range(len(self.non_terminals)):
-            file_out.write("{:<22} {:<2}".format(self.non_terminals[x], '|'))
+            file_out.write("{:<22}".format(self.non_terminals[x]))
             for i in self.pred_table[x]:
-                file_out.write("{:<10}".format(str(i)))
+                file_out.write("|{:<10}".format(str(i)))
             file_out.write("\n")
         file_out.close()
 
